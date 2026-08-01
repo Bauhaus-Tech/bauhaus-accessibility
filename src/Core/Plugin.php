@@ -147,7 +147,10 @@ class Plugin {
 	public function enqueue_frontend_assets(): void {
 		$options = get_option( self::OPTION_NAME, array() );
 
-		$sienna = new \Bauhaus_Acessibilidade\Frontend\SiennaWidget();
+		$sienna  = new \Bauhaus_Acessibilidade\Frontend\SiennaWidget();
+		$vlibras = new \Bauhaus_Acessibilidade\Frontend\VlibrasWidget();
+
 		$sienna->maybe_enqueue( $options );
+		$vlibras->maybe_enqueue( $options );
 	}
 }
