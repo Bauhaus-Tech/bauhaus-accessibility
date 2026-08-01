@@ -39,6 +39,19 @@ The main VLibras script is bundled with the plugin. At runtime, VLibras loads ad
 
 Yes. All Sienna JavaScript, fonts, and translations are bundled in the plugin. No external requests are made for Sienna.
 
+== Third-Party Libraries ==
+
+This plugin bundles the following third-party libraries:
+
+* **Sienna Accessibility Widget** (v2.2.333) — MIT License
+  JavaScript, fonts, and locale files from https://github.com/bennyluk/Sienna-Accessibility-Widget
+
+* **VLibras Plugin** — vlibras.gov.br
+  Main plugin script bundled; additional assets loaded from vlibras.gov.br at runtime.
+
+* **OpenDyslexic Font** (v3) — SIL Open Font License
+  Dyslexia-friendly typeface bundled with Sienna.
+
 == Changelog ==
 
 = 1.0.0 =
