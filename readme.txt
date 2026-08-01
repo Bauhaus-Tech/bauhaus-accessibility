@@ -1,0 +1,49 @@
+=== Bauhaus Acessibilidade BR ===
+Contributors: bauhaus
+Tags: accessibility, acessibilidade, vlibras, libras, sienna, inclusion, inclusao
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Adds the VLibras sign language widget and the Sienna accessibility toolbar to your WordPress site.
+
+== Description ==
+
+Bauhaus Acessibilidade BR integrates two accessibility tools into your WordPress site:
+
+* **VLibras Widget** — The Brazilian government's Libras (Brazilian Sign Language) virtual interpreter, helping deaf users access your content.
+* **Sienna Accessibility Widget** — A full-featured accessibility toolbar with contrast adjustment, font size control, screen reader, dyslexia-friendly font, and more.
+
+Both widgets appear as stacked buttons on the side of the page. You choose left or right.
+
+== Installation ==
+
+1. Upload the plugin files to `/wp-content/plugins/bauhaus-acessibilidade-br` or install directly from the WordPress plugin repository.
+2. Activate the plugin through the "Plugins" menu in WordPress.
+3. Go to Settings → Acessibilidade BR to enable the widgets you want.
+
+== Frequently Asked Questions ==
+
+= Where do the widgets appear? =
+
+They appear as two vertically-stacked buttons, vertically centered on the page. You can choose left or right side in the settings.
+
+= Does VLibras load external resources? =
+
+The main VLibras script is bundled with the plugin. At runtime, VLibras loads additional assets (the 3D avatar and animation data) from vlibras.gov.br. This is disclosed during plugin installation.
+
+= Is the Sienna widget fully self-contained? =
+
+Yes. All Sienna JavaScript, fonts, and translations are bundled in the plugin. No external requests are made for Sienna.
+
+== Changelog ==
+
+= 1.0.0 =
+* Initial release.
+* VLibras widget with enable/disable toggle.
+* Sienna Accessibility widget with enable/disable toggle.
+* Left/right position selector.
+* Settings page under Settings → Acessibilidade BR.

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ruleset name="Bauhaus Acessibilidade BR">
+    <description>WordPress-Extra coding standard for Bauhaus Acessibilidade BR</description>
+
+    <!-- Only scan our own source -->
+    <file>bauhaus-acessibilidade-br.php</file>
+    <file>src/</file>
+    <file>tests/</file>
+    <file>uninstall.php</file>
+
+    <!-- Exclude third-party vendor -->
+    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>assets/</exclude-pattern>
+    <exclude-pattern>languages/</exclude-pattern>
+
+    <!-- WordPress Extra ruleset -->
+    <rule ref="WordPress-Extra"/>
+
+    <!-- Allow PSR-4 file naming (class Name {} inside class-name.php is fine) -->
+    <rule ref="WordPress.Files.FileName">
+        <exclude-pattern>src/</exclude-pattern>
+        <exclude-pattern>tests/</exclude-pattern>
+    </rule>
+
+    <!-- In test bootstrap, ABSPATH is a WordPress constant, not ours -->
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <exclude-pattern>tests/bootstrap.php</exclude-pattern>
+    </rule>
+
+    <!-- WordPress prefix for globals, but allow our namespace prefix -->
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="bauhaus_acessibilidade"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

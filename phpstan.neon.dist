@@ -1,0 +1,15 @@
+parameters:
+    level: 5
+    paths:
+        - bauhaus-acessibilidade-br.php
+        - src/
+        - uninstall.php
+    excludePaths:
+        analyseAndScan:
+            - vendor/
+            - assets/
+            - languages/
+            - tests/
+    bootstrapFiles:
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+
