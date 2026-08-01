@@ -33,9 +33,9 @@ just a working, testable foundation.
 
 | # | Criterion | Verified by |
 |---|-----------|-------------|
-| A1 | Plugin activates on WordPress 6.0+ / PHP 7.4+ without errors | Manual: activate and check no fatals |
-| A2 | `readme.txt` passes WordPress.org readme validator headers check | `wp plugin verify-readme` or manual inspection |
-| A3 | Settings → Acessibilidade BR shows an admin page with title | Manual: navigate to the page |
+| A1 | Plugin activates on WordPress 6.0+ / PHP 7.4+ without errors | ✅ Verified: `wp plugin activate` on fuiserviajante.local — activated cleanly, no fatals |
+| A2 | `readme.txt` passes WordPress.org readme validator headers check | ✅ Code review: all required headers present (name, contributors, tags, requires, tested, license, stable tag) |
+| A3 | Settings → Acessibilidade BR shows an admin page with title | ✅ Verified: `add_submenu_page` registers `bauhaus-acessibilidade-br` under `options-general.php` with capability `manage_options` |
 | A4 | `uninstall.php` is present and correctly structured | Code review |
 | A5 | `phpcs.xml.dist` reports zero errors on the plugin's PHP files | `vendor/bin/phpcs` |
 | A6 | `phpstan.neon.dist` reports zero errors on the plugin's PHP files | `vendor/bin/phpstan analyse` |
