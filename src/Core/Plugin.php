@@ -49,6 +49,7 @@ class Plugin {
 
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ) );
 	}
 
 	/**
@@ -134,5 +135,19 @@ class Plugin {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Enqueue front-end scripts and styles for enabled widgets.
+	 *
+	 * Hooked to 'wp_enqueue_scripts'.
+	 *
+	 * @return void
+	 */
+	public function enqueue_frontend_assets(): void {
+		$options = get_option( self::OPTION_NAME, array() );
+
+		$sienna = new \Bauhaus_Acessibilidade\Frontend\SiennaWidget();
+		$sienna->maybe_enqueue( $options );
 	}
 }

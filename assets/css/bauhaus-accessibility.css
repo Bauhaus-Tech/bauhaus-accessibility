@@ -1,0 +1,26 @@
+/**
+ * Bauhaus Acessibilidade BR — Widget Positioning
+ *
+ * Both widgets (Sienna and VLibras) appear as stacked buttons on the
+ * far left or right of the page, vertically centered.
+ *
+ * Sienna 2.x handles its own fixed positioning via the data-position
+ * config. This stylesheet adjusts stacking and resolves any conflicts.
+ */
+
+/* Ensure Sienna's menu button sits above VLibras when both are visible. */
+.bauhaus-widgets-right .asw-menu-btn {
+	z-index: 500000; /* Sienna default, ensure it stays high */
+}
+
+.bauhaus-widgets-left .asw-menu-btn {
+	z-index: 500000;
+}
+
+/* Mobile: smaller buttons, less intrusion. */
+@media only screen and (max-width: 768px) {
+	.asw-menu-btn {
+		--asw-btn-size: 42px;
+		--asw-icon-size: 26px;
+	}
+}
