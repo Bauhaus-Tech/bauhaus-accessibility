@@ -94,6 +94,8 @@ class PluginTest extends TestCase {
 	public function test_run_hooks_admin_menu(): void {
 		$actions = array();
 
+		Functions\stubs( array( 'load_plugin_textdomain' ) );
+
 		Functions\expect( 'add_action' )
 			->zeroOrMoreTimes()
 			->andReturnUsing(
@@ -116,6 +118,8 @@ class PluginTest extends TestCase {
 	public function test_run_hooks_admin_init(): void {
 		$actions = array();
 
+		Functions\stubs( array( 'load_plugin_textdomain' ) );
+
 		Functions\expect( 'add_action' )
 			->zeroOrMoreTimes()
 			->andReturnUsing(
@@ -133,10 +137,42 @@ class PluginTest extends TestCase {
 	}
 
 	/**
+	 * run() must call load_plugin_textdomain for i18n support.
+	 */
+	public function test_run_loads_textdomain(): void {
+		$called_with_domain = null;
+
+		Functions\expect( 'load_plugin_textdomain' )
+			->once()
+			->andReturnUsing(
+				function ( string $domain ) use ( &$called_with_domain ): bool {
+					$called_with_domain = $domain;
+					return true;
+				}
+			);
+
+		// Also stub add_action since run() will register hooks too.
+		Functions\expect( 'add_action' )
+			->zeroOrMoreTimes()
+			->andReturn( true );
+
+		$plugin = new Plugin();
+		$plugin->run();
+
+		$this->assertSame(
+			'bauhaus-acessibilidade-br',
+			$called_with_domain,
+			'load_plugin_textdomain was not called with the correct domain'
+		);
+	}
+
+	/**
 	 * sanitize_settings must return correct defaults for empty input.
 	 */
 	public function test_sanitize_settings_returns_defaults_for_empty_input(): void {
-		Functions\stubs( array( 'sanitize_text_field' ) );
+		Functions\expect( 'sanitize_text_field' )
+			->zeroOrMoreTimes()
+			->andReturnUsing( fn( string $v ) => $v );
 
 		$plugin = new Plugin();
 		$result = $plugin->sanitize_settings( array() );
@@ -151,7 +187,9 @@ class PluginTest extends TestCase {
 	 * sanitize_settings must coerce checkbox values to booleans.
 	 */
 	public function test_sanitize_settings_coerces_checkboxes_to_boolean(): void {
-		Functions\stubs( array( 'sanitize_text_field' ) );
+		Functions\expect( 'sanitize_text_field' )
+			->zeroOrMoreTimes()
+			->andReturnUsing( fn( string $v ) => $v );
 
 		$plugin = new Plugin();
 
@@ -170,7 +208,9 @@ class PluginTest extends TestCase {
 	 * sanitize_settings must reject invalid widget positions.
 	 */
 	public function test_sanitize_settings_rejects_invalid_position(): void {
-		Functions\stubs( array( 'sanitize_text_field' ) );
+		Functions\expect( 'sanitize_text_field' )
+			->zeroOrMoreTimes()
+			->andReturnUsing( fn( string $v ) => $v );
 
 		$plugin = new Plugin();
 
@@ -187,7 +227,9 @@ class PluginTest extends TestCase {
 	 * sanitize_settings must accept 'left' as widget position.
 	 */
 	public function test_sanitize_settings_accepts_left_position(): void {
-		Functions\stubs( array( 'sanitize_text_field' ) );
+		Functions\expect( 'sanitize_text_field' )
+			->zeroOrMoreTimes()
+			->andReturnUsing( fn( string $v ) => $v );
 
 		$plugin = new Plugin();
 

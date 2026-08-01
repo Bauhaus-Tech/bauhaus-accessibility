@@ -41,6 +41,12 @@ class Plugin {
 	 * @return void
 	 */
 	public function run(): void {
+		load_plugin_textdomain(
+			'bauhaus-acessibilidade-br',
+			false,
+			dirname( __DIR__, 2 ) . '/languages'
+		);
+
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
