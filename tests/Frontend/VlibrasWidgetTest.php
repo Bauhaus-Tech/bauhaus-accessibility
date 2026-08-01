@@ -65,7 +65,10 @@ class VlibrasWidgetTest extends TestCase {
 			->once()
 			->andReturn( true );
 
-		$options = array( 'enable_vlibras' => true, 'widget_position' => 'right' );
+		$options = array(
+			'enable_vlibras'  => true,
+			'widget_position' => 'right',
+		);
 		$widget  = new VlibrasWidget();
 		$widget->maybe_enqueue( $options );
 
@@ -110,7 +113,10 @@ class VlibrasWidgetTest extends TestCase {
 			)
 			->andReturn( true );
 
-		$options = array( 'enable_vlibras' => true, 'widget_position' => 'right' );
+		$options = array(
+			'enable_vlibras'  => true,
+			'widget_position' => 'right',
+		);
 		$widget  = new VlibrasWidget();
 		$widget->maybe_enqueue( $options );
 
@@ -165,7 +171,10 @@ class VlibrasWidgetTest extends TestCase {
 				}
 			);
 
-		$options = array( 'enable_vlibras' => true, 'widget_position' => 'left' );
+		$options = array(
+			'enable_vlibras'  => true,
+			'widget_position' => 'left',
+		);
 		$widget  = new VlibrasWidget();
 		$widget->maybe_enqueue( $options );
 

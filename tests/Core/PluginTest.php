@@ -71,6 +71,8 @@ class PluginTest extends TestCase {
 	public function test_register_settings_calls_register_setting(): void {
 		$called = false;
 
+		Functions\stubs( array( 'add_settings_section', 'add_settings_field', '__' ) );
+
 		Functions\expect( 'register_setting' )
 			->once()
 			->andReturnUsing(
@@ -269,6 +271,157 @@ class PluginTest extends TestCase {
 		);
 
 		$this->assertSame( 'libras', $result['sign_language'] );
+	}
+
+	/**
+	 * register_settings must register a settings section.
+	 */
+	public function test_register_settings_adds_section(): void {
+		$section_registered = false;
+
+		Functions\when( '__' )->returnArg();
+
+		Functions\expect( 'register_setting' )
+			->once()
+			->andReturn( true );
+
+		Functions\expect( 'add_settings_field' )
+			->zeroOrMoreTimes()
+			->andReturn( true );
+
+		Functions\expect( 'add_settings_section' )
+			->once()
+			->with(
+				'bauhaus_acessibilidade_main',
+				\Mockery::any(),
+				\Mockery::any(),
+				'bauhaus_acessibilidade_settings_group'
+			)
+			->andReturnUsing(
+				function () use ( &$section_registered ) {
+					$section_registered = true;
+				}
+			);
+
+		$plugin = new Plugin();
+		$plugin->register_settings();
+
+		$this->assertTrue( $section_registered );
+	}
+
+	/**
+	 * register_settings must register all four setting fields.
+	 */
+	public function test_register_settings_adds_fields(): void {
+		$fields = array();
+
+		Functions\when( '__' )->returnArg();
+
+		Functions\expect( 'register_setting' )->once()->andReturn( true );
+		Functions\expect( 'add_settings_section' )->once()->andReturn( true );
+
+		Functions\expect( 'add_settings_field' )
+			->times( 4 )
+			->andReturnUsing(
+				function ( string $id ) use ( &$fields ) {
+					$fields[] = $id;
+				}
+			);
+
+		$plugin = new Plugin();
+		$plugin->register_settings();
+
+		$this::assertContains( 'enable_vlibras', $fields );
+		$this::assertContains( 'enable_sienna', $fields );
+		$this::assertContains( 'widget_position', $fields );
+		$this::assertContains( 'sign_language', $fields );
+	}
+
+	/**
+	 * The enable_vlibras field callback must render a checkbox.
+	 */
+	public function test_enable_vlibras_field_renders_checkbox(): void {
+		Functions\stubs(
+			array(
+				'checked',
+				'esc_attr',
+				'esc_html_e',
+				'esc_html',
+				'__',
+				'selected',
+			)
+		);
+		Functions\when( 'get_option' )->justReturn( array() );
+		Functions\when( 'esc_attr' )->returnArg();
+		Functions\when( '__' )->returnArg();
+		Functions\when( 'esc_html' )->returnArg();
+
+		$plugin = new Plugin();
+
+		ob_start();
+		$plugin->render_enable_vlibras_field();
+		$output = ob_get_clean();
+
+		$this->assertStringContainsString( 'type="checkbox"', $output );
+		$this->assertStringContainsString( 'enable_vlibras', $output );
+	}
+
+	/**
+	 * The widget_position field callback must render radio buttons.
+	 */
+	public function test_widget_position_field_renders_radio_buttons(): void {
+		Functions\stubs(
+			array(
+				'checked',
+				'esc_attr',
+				'esc_html_e',
+				'esc_html',
+				'__',
+			)
+		);
+		Functions\when( 'get_option' )->justReturn( array() );
+		Functions\when( 'esc_attr' )->returnArg();
+		Functions\when( '__' )->returnArg();
+
+		$plugin = new Plugin();
+
+		ob_start();
+		$plugin->render_widget_position_field();
+		$output = ob_get_clean();
+
+		$this->assertStringContainsString( 'type="radio"', $output );
+		$this->assertStringContainsString( 'value="right"', $output );
+		$this->assertStringContainsString( 'value="left"', $output );
+	}
+
+	/**
+	 * The sign_language field callback must render a dropdown with Libras.
+	 */
+	public function test_sign_language_field_renders_select(): void {
+		Functions\stubs(
+			array(
+				'checked',
+				'esc_attr',
+				'esc_html',
+				'__',
+				'selected',
+				'apply_filters',
+			)
+		);
+		Functions\when( 'get_option' )->justReturn( array() );
+		Functions\when( 'esc_attr' )->returnArg();
+		Functions\when( '__' )->returnArg();
+		Functions\when( 'esc_html' )->returnArg();
+		Functions\when( 'apply_filters' )->justReturn( array( 'libras' => 'Libras' ) );
+
+		$plugin = new Plugin();
+
+		ob_start();
+		$plugin->render_sign_language_field();
+		$output = ob_get_clean();
+
+		$this->assertStringContainsString( '<select', $output );
+		$this->assertStringContainsString( 'libras', $output );
 	}
 
 	/**

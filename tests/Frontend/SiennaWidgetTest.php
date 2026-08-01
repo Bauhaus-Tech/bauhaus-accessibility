@@ -74,7 +74,10 @@ class SiennaWidgetTest extends TestCase {
 
 		// Let file_exists/file_get_contents work — the UMD bundle is present.
 
-		$options = array( 'enable_sienna' => true, 'widget_position' => 'right' );
+		$options = array(
+			'enable_sienna'   => true,
+			'widget_position' => 'right',
+		);
 		$widget  = new SiennaWidget();
 		$widget->maybe_enqueue( $options );
 
@@ -125,8 +128,10 @@ class SiennaWidgetTest extends TestCase {
 				}
 			);
 
-
-		$options = array( 'enable_sienna' => true, 'widget_position' => 'left' );
+		$options = array(
+			'enable_sienna'   => true,
+			'widget_position' => 'left',
+		);
 		$widget  = new SiennaWidget();
 		$widget->maybe_enqueue( $options );
 
@@ -156,8 +161,10 @@ class SiennaWidgetTest extends TestCase {
 				}
 			);
 
-
-		$options = array( 'enable_sienna' => true, 'widget_position' => 'right' );
+		$options = array(
+			'enable_sienna'   => true,
+			'widget_position' => 'right',
+		);
 		$widget  = new SiennaWidget();
 		$widget->maybe_enqueue( $options );
 
@@ -190,8 +197,10 @@ class SiennaWidgetTest extends TestCase {
 				}
 			);
 
-
-		$options = array( 'enable_sienna' => true, 'widget_position' => 'left' );
+		$options = array(
+			'enable_sienna'   => true,
+			'widget_position' => 'left',
+		);
 		$widget  = new SiennaWidget();
 		$widget->maybe_enqueue( $options );
 

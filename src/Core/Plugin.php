@@ -92,6 +92,45 @@ class Plugin {
 				),
 			)
 		);
+
+		add_settings_section(
+			'bauhaus_acessibilidade_main',
+			__( 'Widget Settings', 'bauhaus-acessibilidade-br' ),
+			'__return_empty_string',
+			'bauhaus_acessibilidade_settings_group'
+		);
+
+		add_settings_field(
+			'enable_vlibras',
+			__( 'Enable VLibras Sign Language Interpreter', 'bauhaus-acessibilidade-br' ),
+			array( $this, 'render_enable_vlibras_field' ),
+			'bauhaus_acessibilidade_settings_group',
+			'bauhaus_acessibilidade_main'
+		);
+
+		add_settings_field(
+			'enable_sienna',
+			__( 'Enable Accessibility Widget', 'bauhaus-acessibilidade-br' ),
+			array( $this, 'render_enable_sienna_field' ),
+			'bauhaus_acessibilidade_settings_group',
+			'bauhaus_acessibilidade_main'
+		);
+
+		add_settings_field(
+			'widget_position',
+			__( 'Widget Position', 'bauhaus-acessibilidade-br' ),
+			array( $this, 'render_widget_position_field' ),
+			'bauhaus_acessibilidade_settings_group',
+			'bauhaus_acessibilidade_main'
+		);
+
+		add_settings_field(
+			'sign_language',
+			__( 'Sign Language', 'bauhaus-acessibilidade-br' ),
+			array( $this, 'render_sign_language_field' ),
+			'bauhaus_acessibilidade_settings_group',
+			'bauhaus_acessibilidade_main'
+		);
 	}
 
 	/**
@@ -134,6 +173,105 @@ class Plugin {
 				?>
 			</form>
 		</div>
+		<?php
+	}
+
+	/**
+	 * Render the enable_vlibras checkbox field.
+	 *
+	 * @return void
+	 */
+	public function render_enable_vlibras_field(): void {
+		$options = get_option( self::OPTION_NAME, array() );
+		$value   = ! empty( $options['enable_vlibras'] );
+		?>
+		<input
+			type="checkbox"
+			name="<?php echo esc_attr( self::OPTION_NAME ); ?>[enable_vlibras]"
+			value="1"
+			<?php checked( $value ); ?>
+		>
+		<?php
+	}
+
+	/**
+	 * Render the enable_sienna checkbox field.
+	 *
+	 * @return void
+	 */
+	public function render_enable_sienna_field(): void {
+		$options = get_option( self::OPTION_NAME, array() );
+		$value   = ! empty( $options['enable_sienna'] );
+		?>
+		<input
+			type="checkbox"
+			name="<?php echo esc_attr( self::OPTION_NAME ); ?>[enable_sienna]"
+			value="1"
+			<?php checked( $value ); ?>
+		>
+		<?php
+	}
+
+	/**
+	 * Render the widget_position radio buttons.
+	 *
+	 * @return void
+	 */
+	public function render_widget_position_field(): void {
+		$options  = get_option( self::OPTION_NAME, array() );
+		$position = $options['widget_position'] ?? 'right';
+		?>
+		<fieldset>
+			<label>
+				<input
+					type="radio"
+					name="<?php echo esc_attr( self::OPTION_NAME ); ?>[widget_position]"
+					value="right"
+					<?php checked( $position, 'right' ); ?>
+				>
+				<?php esc_html_e( 'Right', 'bauhaus-acessibilidade-br' ); ?>
+			</label>
+			<br>
+			<label>
+				<input
+					type="radio"
+					name="<?php echo esc_attr( self::OPTION_NAME ); ?>[widget_position]"
+					value="left"
+					<?php checked( $position, 'left' ); ?>
+				>
+				<?php esc_html_e( 'Left', 'bauhaus-acessibilidade-br' ); ?>
+			</label>
+		</fieldset>
+		<?php
+	}
+
+	/**
+	 * Render the sign_language dropdown.
+	 *
+	 * @return void
+	 */
+	public function render_sign_language_field(): void {
+		$options  = get_option( self::OPTION_NAME, array() );
+		$language = $options['sign_language'] ?? 'libras';
+
+		$available = array(
+			'libras' => __( 'Libras (Brazilian Sign Language)', 'bauhaus-acessibilidade-br' ),
+		);
+
+		/**
+		 * Filters the available sign languages shown in the admin dropdown.
+		 *
+		 * @param array $available Associative array of key => label pairs.
+		 */
+		$available = apply_filters( 'bauhaus_acessibilidade_sign_languages', $available );
+		?>
+		<select name="<?php echo esc_attr( self::OPTION_NAME ); ?>[sign_language]">
+			<?php foreach ( $available as $key => $label ) : ?>
+				<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $language, $key ); ?>>
+					<?php echo esc_html( $label ); ?>
+				</option>
+			<?php endforeach; ?>
+		</select>
 		<?php
 	}
 
