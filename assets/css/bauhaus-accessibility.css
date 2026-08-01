@@ -1,26 +1,83 @@
 /**
- * Bauhaus Acessibilidade BR — Widget Positioning
+ * Bauhaus Acessibilidade BR — Widget Positioning & Styling
  *
- * Both widgets (Sienna and VLibras) appear as stacked buttons on the
- * far left or right of the page, vertically centered.
+ * Both widgets appear as stacked square buttons with rounded corners
+ * on the far left or right of the page, vertically centered.
  *
- * Sienna 2.x handles its own fixed positioning via the data-position
- * config. This stylesheet adjusts stacking and resolves any conflicts.
+ * The Sienna button is restyled to visually match the VLibras button
+ * (same size, shape, and color).
  */
 
-/* Ensure Sienna's menu button sits above VLibras when both are visible. */
-.bauhaus-widgets-right .asw-menu-btn {
-	z-index: 500000; /* Sienna default, ensure it stays high */
-}
-
-.bauhaus-widgets-left .asw-menu-btn {
+/* ---------------------------------------------------------------
+ * Sienna button: match VLibras visual style
+ * VLibras: 40x40px, border-radius 8px, blue background
+ * --------------------------------------------------------------- */
+.asw-menu-btn {
+	--asw-btn-size: 40px !important;
+	--asw-icon-size: 24px !important;
+	width: 40px !important;
+	height: 40px !important;
+	border-radius: 8px !important;
+	border: none !important;
+	outline: none !important;
+	background: #005eb8 !important;
+	background: linear-gradient(135deg, #005eb8 0%, #003d7a 100%) !important;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
 	z-index: 500000;
 }
 
-/* Mobile: smaller buttons, less intrusion. */
+.asw-menu-btn:hover {
+	transform: scale(1.05);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ---------------------------------------------------------------
+ * Stacking: push Sienna button below VLibras so they don't overlap.
+ * VLibras sits at center; Sienna sits just below it.
+ * --------------------------------------------------------------- */
+.asw-container .asw-menu-btn {
+	top: calc(50% + 28px) !important;
+	bottom: auto !important;
+}
+
+/* Left-side: VLibras gets .left class, Sienna follows. */
+.bauhaus-widgets-left div[vw] {
+	left: 10px !important;
+	right: auto !important;
+}
+
+/* Keep Sienna on the right side by default (its own positioning handles it).
+   On left, let Sienna's data-position="center-left" take over. */
+
+/* ---------------------------------------------------------------
+ * Hide Sienna branding and footer
+ * --------------------------------------------------------------- */
+.asw-footer {
+	display: none !important;
+}
+
+#asw-statement-link {
+	display: none !important;
+}
+
+/* Hide the "powered by Sienna" link inside the menu if it survives. */
+.asw-footer-powered {
+	display: none !important;
+}
+
+/* Hide any external links pointing to Sienna's site. */
+.asw-menu a[href*="accessibility-widget.pages.dev"],
+.asw-menu a[href*="sienna.app"] {
+	display: none !important;
+}
+
+/* ---------------------------------------------------------------
+ * Mobile
+ * --------------------------------------------------------------- */
 @media only screen and (max-width: 768px) {
 	.asw-menu-btn {
-		--asw-btn-size: 42px;
-		--asw-icon-size: 26px;
+		width: 38px !important;
+		height: 38px !important;
+		--asw-icon-size: 22px !important;
 	}
 }
