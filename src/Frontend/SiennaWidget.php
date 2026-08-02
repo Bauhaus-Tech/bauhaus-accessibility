@@ -98,6 +98,8 @@ class SiennaWidget {
 					'outline:5px solid var(--asw-primary)!important',
 					',20],size:58,',
 					'primaryColor:"#0848ca"',
+					// Raise z-index above VLibras (2147483645)
+					'z-index:500000',
 				),
 				array(
 					'--asw-btn-size: 40px',
@@ -107,22 +109,25 @@ class SiennaWidget {
 					'outline:none!important',
 					',20],size:40,',
 					'primaryColor:"#005eb8"',
+					'z-index:2147483646',
 				),
 				$js
 			);
 
 			wp_add_inline_script( 'sienna-accessibility', $js );
 
-		// Hide Sienna footer branding after the widget initializes.
+		// Remove Sienna footer branding whenever it appears in the DOM.
+		// The footer is created dynamically when the menu opens, so we
+		// watch for it with a MutationObserver.
 		wp_add_inline_script(
 			'sienna-accessibility',
 			'(function(){'
-				. 'var tries=0;'
-				. 'var ival=setInterval(function(){'
+				. 'new MutationObserver(function(){'
 				. 'var f=document.querySelector(".asw-footer");'
-				. 'if(f){f.remove();clearInterval(ival);}'
-				. 'if(++tries>20) clearInterval(ival);'
-				. '}, 200);'
+				. 'if(f){f.remove();}'
+				. 'var s=document.getElementById("asw-statement-link");'
+				. 'if(s){s.remove();}'
+				. '}).observe(document.body||document.documentElement,{childList:true,subtree:true});'
 				. '})();',
 			'after'
 		);
