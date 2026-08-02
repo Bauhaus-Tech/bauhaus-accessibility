@@ -46,13 +46,18 @@ class VlibrasWidget {
 			true
 		);
 
-		// Initialize VLibras with the government CDN root path.
-		// Chunks and avatar assets are loaded dynamically from this URL.
+		// Map our left/right setting to VLibras position codes.
+		// VLibras uses: L, R, T, B, TL, TR, BL, BR.
+		$vlibras_position = 'left' === $position ? 'L' : 'R';
+
+		// Initialize VLibras with position-aware config.
+		// Passing position ensures the panel opens in the correct direction.
 		wp_add_inline_script(
 			'vlibras-plugin',
 			sprintf(
-				'new window.VLibras.Widget("%s");',
-				esc_js( self::DEFAULT_ROOT_PATH )
+				'new window.VLibras.Widget({rootPath:"%s",position:"%s"});',
+				esc_js( self::DEFAULT_ROOT_PATH ),
+				esc_js( $vlibras_position )
 			)
 		);
 

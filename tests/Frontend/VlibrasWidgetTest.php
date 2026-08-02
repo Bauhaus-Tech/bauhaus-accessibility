@@ -107,7 +107,9 @@ class VlibrasWidgetTest extends TestCase {
 					function ( string $script ) use ( &$inline_script ) {
 						$inline_script = $script;
 						return strpos( $script, 'VLibras.Widget' ) !== false
-							&& strpos( $script, 'vlibras.gov.br' ) !== false;
+							&& strpos( $script, 'vlibras.gov.br' ) !== false
+							&& strpos( $script, 'rootPath' ) !== false
+							&& strpos( $script, 'position' ) !== false;
 					}
 				)
 			)
