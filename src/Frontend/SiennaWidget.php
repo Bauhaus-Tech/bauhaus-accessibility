@@ -77,13 +77,52 @@ class SiennaWidget {
 		$umd_file = dirname( __DIR__, 2 ) . '/' . self::UMD_PATH;
 		if ( file_exists( $umd_file ) ) {
 			$js = file_get_contents( $umd_file );
+
+			// Patch CDN asset URLs → local plugin directory.
 			$js = str_replace(
 				self::CDN_BASE,
 				plugin_dir_url( $umd_file ) . '../',
 				$js
 			);
 
+			// Patch button style to match VLibras: square, 40px, blue.
+			$js = str_replace(
+				array(
+					'--asw-btn-size: 58px',
+					'--asw-icon-size: 36px',
+					'border-radius:50%!important',
+					'border:3px solid white!important',
+					'outline:5px solid var(--asw-primary)!important',
+					',20],size:58,',
+					'primaryColor:"#0848ca"',
+				),
+				array(
+					'--asw-btn-size: 40px',
+					'--asw-icon-size: 24px',
+					'border-radius:8px!important',
+					'border:none!important',
+					'outline:none!important',
+					',20],size:40,',
+					'primaryColor:"#005eb8"',
+				),
+				$js
+			);
+
 			wp_add_inline_script( 'sienna-accessibility', $js );
+
+		// Hide Sienna footer branding after the widget initializes.
+		wp_add_inline_script(
+			'sienna-accessibility',
+			'(function(){'
+				. 'var tries=0;'
+				. 'var ival=setInterval(function(){'
+				. 'var f=document.querySelector(".asw-footer");'
+				. 'if(f){f.remove();clearInterval(ival);}'
+				. 'if(++tries>20) clearInterval(ival);'
+				. '}, 200);'
+				. '})();',
+			'after'
+		);
 		}
 
 		// Position CSS for the widget buttons (side + stacking).
@@ -102,74 +141,5 @@ class SiennaWidget {
 				return $classes;
 			}
 		);
-
-		// Inject button style overrides in wp_footer at the very end,
-		// AFTER Sienna's JS has injected its own inline styles.
-		add_action( 'wp_footer', array( $this, 'render_button_overrides' ), PHP_INT_MAX );
-	}
-
-	/**
-	 * Output CSS overrides for the Sienna button.
-	 *
-	 * Must run after Sienna's JS-injected styles. Hooked to wp_footer
-	 * at PHP_INT_MAX priority so it's the last thing on the page.
-	 *
-	 * @return void
-	 */
-	public function render_button_overrides(): void {
-		?>
-		<style id="bauhaus-sienna-overrides">
-		/* Match VLibras: 40x40px square with 8px radius, blue */
-		.asw-menu-btn {
-			width: 40px !important;
-			height: 40px !important;
-			border-radius: 8px !important;
-			border: none !important;
-			outline: none !important;
-			background: #005eb8 !important;
-			background: linear-gradient(135deg, #005eb8 0%, #003d7a 100%) !important;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
-		}
-
-		.asw-menu-btn svg {
-			width: 24px !important;
-			height: 24px !important;
-			min-width: 24px !important;
-			min-height: 24px !important;
-			max-width: 24px !important;
-			max-height: 24px !important;
-		}
-
-		/* Stack below VLibras */
-		.asw-container .asw-menu-btn {
-			top: calc(50% + 28px) !important;
-			bottom: auto !important;
-		}
-
-		/* Hide footer branding */
-		.asw-footer,
-		.asw-footer-powered,
-		#asw-statement-link,
-		.asw-menu a[href*="accessibility-widget.pages.dev"],
-		.asw-menu a[href*="sienna.app"] {
-			display: none !important;
-		}
-
-		@media only screen and (max-width: 768px) {
-			.asw-menu-btn {
-				width: 38px !important;
-				height: 38px !important;
-			}
-			.asw-menu-btn svg {
-				width: 22px !important;
-				height: 22px !important;
-				min-width: 22px !important;
-				min-height: 22px !important;
-				max-width: 22px !important;
-				max-height: 22px !important;
-			}
-		}
-		</style>
-		<?php
 	}
 }

@@ -4,14 +4,13 @@
  * Both widgets appear as stacked square buttons on the far left or
  * right of the page, vertically centered.
  *
- * Critical positioning and branding-hiding rules are injected via
- * wp_footer at PHP_INT_MAX priority to override Sienna's JS-injected
- * styles. This file handles early-loading layout rules only.
+ * Button styling (size, shape, color) is patched directly into the
+ * Sienna UMD bundle at serve-time. Footer branding is removed via JS.
+ * This file handles early-loading layout rules only.
  */
 
-/* Sienna default z-index */
-.bauhaus-widgets-right .asw-menu-btn,
-.bauhaus-widgets-left .asw-menu-btn {
+/* Sienna z-index stacking */
+.asw-menu-btn {
 	z-index: 500000;
 }
 
