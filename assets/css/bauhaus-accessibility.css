@@ -15,12 +15,32 @@
 }
 
 /* VLibras horizontal alignment — match Sienna's 10px offset */
-.bauhaus-widgets-left div[vw] {
-	left: 10px !important;
-	right: auto !important;
+.bauhaus-widgets-left {
+	div[vw] {
+		left: 10px !important;
+		right: auto !important;
+	}
+
+	.asw-container {
+		.asw-widget {
+			.asw-menu-btn {
+				left: 20px;
+			}
+		}
+	}
 }
 
-.bauhaus-widgets-right div[vw] {
-	right: 10px !important;
-	left: auto !important;
+.bauhaus-widgets-right {
+	div[vw] {
+		right: 10px !important;
+		left: auto !important;
+	}
+
+	.asw-container {
+		.asw-widget {
+			.asw-menu-btn {
+				right: 20px;
+			}
+		}
+	}
 }
