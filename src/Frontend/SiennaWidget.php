@@ -67,7 +67,7 @@ class SiennaWidget {
 					. 'd.style.display="none";'
 					. 'd.setAttribute("data-position","%s");'
 					. 'd.setAttribute("data-lang","%s");'
-					. 'd.setAttribute("data-offset","20,45");'
+					. 'd.setAttribute("data-offset","10,45");'
 					. 'document.body.appendChild(d);'
 					. '})();',
 				esc_js( $sienna_position ),
