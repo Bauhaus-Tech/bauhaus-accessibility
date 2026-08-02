@@ -57,6 +57,8 @@ class SiennaWidget {
 		wp_enqueue_script( 'sienna-accessibility' );
 
 		// Inject config element before the bundle loads.
+		// offset: [horizontal, vertical]. 45px vertical offset places
+		// Sienna below VLibras (which sits at center with a 10px nudge).
 		wp_add_inline_script(
 			'sienna-accessibility',
 			sprintf(
@@ -65,6 +67,7 @@ class SiennaWidget {
 					. 'd.style.display="none";'
 					. 'd.setAttribute("data-position","%s");'
 					. 'd.setAttribute("data-lang","%s");'
+					. 'd.setAttribute("data-offset","20,45");'
 					. 'document.body.appendChild(d);'
 					. '})();',
 				esc_js( $sienna_position ),
