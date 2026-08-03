@@ -5,10 +5,10 @@
  * Enqueues the local VLibras plugin script, injects the container markup
  * into wp_footer, and initializes the VLibras interpreter.
  *
- * @package Bauhaus_Acessibilidade\Frontend
+ * @package Bauhaus_Accessibility\Frontend
  */
 
-namespace Bauhaus_Acessibilidade\Frontend;
+namespace Bauhaus_Accessibility\Frontend;
 
 /**
  * Handles front-end output for the VLibras Sign Language widget.

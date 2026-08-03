@@ -6,9 +6,9 @@
  * and stays in sync with Plugin::OPTION_NAME.
  */
 
-namespace Bauhaus_Acessibilidade\Tests\Core;
+namespace Bauhaus_Accessibility\Tests\Core;
 
-use Bauhaus_Acessibilidade\Core\Plugin;
+use Bauhaus_Accessibility\Core\Plugin;
 use Brain\Monkey\Functions;
 use PHPUnit\Framework\TestCase;
 
@@ -66,9 +66,9 @@ class UninstallTest extends TestCase {
 	 */
 	public function test_option_name_constant_matches_uninstall_key(): void {
 		$this->assertSame(
-			'bauhaus_acessibilidade_settings',
+			'bauhaus_accessibility_settings',
 			Plugin::OPTION_NAME,
-			'Plugin::OPTION_NAME must be bauhaus_acessibilidade_settings'
+			'Plugin::OPTION_NAME must be bauhaus_accessibility_settings'
 		);
 	}
 }

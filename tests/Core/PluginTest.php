@@ -3,9 +3,9 @@
  * Tests for the Plugin bootstrap class.
  */
 
-namespace Bauhaus_Acessibilidade\Tests\Core;
+namespace Bauhaus_Accessibility\Tests\Core;
 
-use Bauhaus_Acessibilidade\Core\Plugin;
+use Bauhaus_Accessibility\Core\Plugin;
 use Brain\Monkey\Functions;
 use PHPUnit\Framework\TestCase;
 
@@ -62,7 +62,7 @@ class PluginTest extends TestCase {
 		$this->assertTrue( $called, 'add_submenu_page was not called' );
 		$this->assertSame( 'options-general.php', $args[0] );
 		$this->assertSame( 'manage_options', $args[3] );
-		$this->assertSame( 'bauhaus-acessibilidade-br', $args[4] );
+		$this->assertSame( 'bauhaus-accessibility', $args[4] );
 	}
 
 	/**
@@ -78,8 +78,8 @@ class PluginTest extends TestCase {
 			->andReturnUsing(
 				function ( ...$received ) use ( &$called ) {
 					$called = true;
-					$this->assertSame( 'bauhaus_acessibilidade_settings_group', $received[0] );
-					$this->assertSame( 'bauhaus_acessibilidade_settings', $received[1] );
+					$this->assertSame( 'bauhaus_accessibility_settings_group', $received[0] );
+					$this->assertSame( 'bauhaus_accessibility_settings', $received[1] );
 					return null;
 				}
 			);
@@ -95,8 +95,6 @@ class PluginTest extends TestCase {
 	 */
 	public function test_run_hooks_admin_menu(): void {
 		$actions = array();
-
-		Functions\stubs( array( 'load_plugin_textdomain' ) );
 
 		Functions\expect( 'add_action' )
 			->zeroOrMoreTimes()
@@ -120,8 +118,6 @@ class PluginTest extends TestCase {
 	public function test_run_hooks_admin_init(): void {
 		$actions = array();
 
-		Functions\stubs( array( 'load_plugin_textdomain' ) );
-
 		Functions\expect( 'add_action' )
 			->zeroOrMoreTimes()
 			->andReturnUsing(
@@ -139,21 +135,15 @@ class PluginTest extends TestCase {
 	}
 
 	/**
-	 * run() must call load_plugin_textdomain for i18n support.
+	 * run() must no longer call load_plugin_textdomain.
+	 *
+	 * Textdomain loading was moved to the main plugin file so it can use
+	 * plugin_basename() to compute a correct relative path on 'init'.
 	 */
-	public function test_run_loads_textdomain(): void {
-		$called_with_domain = null;
-
+	public function test_run_does_not_load_textdomain(): void {
 		Functions\expect( 'load_plugin_textdomain' )
-			->once()
-			->andReturnUsing(
-				function ( string $domain ) use ( &$called_with_domain ): bool {
-					$called_with_domain = $domain;
-					return true;
-				}
-			);
+			->never();
 
-		// Also stub add_action since run() will register hooks too.
 		Functions\expect( 'add_action' )
 			->zeroOrMoreTimes()
 			->andReturn( true );
@@ -161,11 +151,9 @@ class PluginTest extends TestCase {
 		$plugin = new Plugin();
 		$plugin->run();
 
-		$this->assertSame(
-			'bauhaus-acessibilidade-br',
-			$called_with_domain,
-			'load_plugin_textdomain was not called with the correct domain'
-		);
+		// If we reach here without Brain Monkey throwing, the never()
+		// expectation passed. Add an explicit assertion for PHPUnit.
+		$this->assertTrue( true );
 	}
 
 	/**
@@ -182,7 +170,6 @@ class PluginTest extends TestCase {
 		$this->assertFalse( $result['enable_vlibras'] );
 		$this->assertFalse( $result['enable_sienna'] );
 		$this->assertSame( 'right', $result['widget_position'] );
-		$this->assertSame( 'libras', $result['sign_language'] );
 	}
 
 	/**
@@ -244,34 +231,7 @@ class PluginTest extends TestCase {
 		$this->assertSame( 'left', $result['widget_position'] );
 	}
 
-	/**
-	 * sanitize_settings must run sign_language through sanitize_text_field.
-	 */
-	public function test_sanitize_settings_sanitizes_sign_language(): void {
-		// Provide a real sanitize_text_field implementation for the test.
-		Functions\expect( 'sanitize_text_field' )
-			->once()
-			->andReturnUsing(
-				function ( string $value ): string {
-					// Simulate WordPress's sanitize_text_field behavior.
-					$value = trim( $value );
-					$value = wp_strip_all_tags( $value );
-					return $value;
-				}
-			);
 
-		Functions\stubs( array( 'wp_strip_all_tags' ) );
-
-		$plugin = new Plugin();
-
-		$result = $plugin->sanitize_settings(
-			array(
-				'sign_language' => '  libras  ',
-			)
-		);
-
-		$this->assertSame( 'libras', $result['sign_language'] );
-	}
 
 	/**
 	 * register_settings must register a settings section.
@@ -292,10 +252,10 @@ class PluginTest extends TestCase {
 		Functions\expect( 'add_settings_section' )
 			->once()
 			->with(
-				'bauhaus_acessibilidade_main',
+				'bauhaus_accessibility_main',
 				\Mockery::any(),
 				\Mockery::any(),
-				'bauhaus_acessibilidade_settings_group'
+				'bauhaus_accessibility_settings_group'
 			)
 			->andReturnUsing(
 				function () use ( &$section_registered ) {
@@ -321,7 +281,7 @@ class PluginTest extends TestCase {
 		Functions\expect( 'add_settings_section' )->once()->andReturn( true );
 
 		Functions\expect( 'add_settings_field' )
-			->times( 4 )
+			->times( 3 )
 			->andReturnUsing(
 				function ( string $id ) use ( &$fields ) {
 					$fields[] = $id;
@@ -334,7 +294,6 @@ class PluginTest extends TestCase {
 		$this::assertContains( 'enable_vlibras', $fields );
 		$this::assertContains( 'enable_sienna', $fields );
 		$this::assertContains( 'widget_position', $fields );
-		$this::assertContains( 'sign_language', $fields );
 	}
 
 	/**
@@ -394,35 +353,7 @@ class PluginTest extends TestCase {
 		$this->assertStringContainsString( 'value="left"', $output );
 	}
 
-	/**
-	 * The sign_language field callback must render a dropdown with Libras.
-	 */
-	public function test_sign_language_field_renders_select(): void {
-		Functions\stubs(
-			array(
-				'checked',
-				'esc_attr',
-				'esc_html',
-				'__',
-				'selected',
-				'apply_filters',
-			)
-		);
-		Functions\when( 'get_option' )->justReturn( array() );
-		Functions\when( 'esc_attr' )->returnArg();
-		Functions\when( '__' )->returnArg();
-		Functions\when( 'esc_html' )->returnArg();
-		Functions\when( 'apply_filters' )->justReturn( array( 'libras' => 'Libras' ) );
 
-		$plugin = new Plugin();
-
-		ob_start();
-		$plugin->render_sign_language_field();
-		$output = ob_get_clean();
-
-		$this->assertStringContainsString( '<select', $output );
-		$this->assertStringContainsString( 'libras', $output );
-	}
 
 	/**
 	 * The plugin version constant must be defined.
@@ -436,6 +367,6 @@ class PluginTest extends TestCase {
 	 */
 	public function test_plugin_has_option_name_constant(): void {
 		$this->assertNotEmpty( Plugin::OPTION_NAME );
-		$this->assertSame( 'bauhaus_acessibilidade_settings', Plugin::OPTION_NAME );
+		$this->assertSame( 'bauhaus_accessibility_settings', Plugin::OPTION_NAME );
 	}
 }

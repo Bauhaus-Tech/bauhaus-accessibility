@@ -3,9 +3,9 @@
  * Tests for the SiennaWidget front-end class.
  */
 
-namespace Bauhaus_Acessibilidade\Tests\Frontend;
+namespace Bauhaus_Accessibility\Tests\Frontend;
 
-use Bauhaus_Acessibilidade\Frontend\SiennaWidget;
+use Bauhaus_Accessibility\Frontend\SiennaWidget;
 use Brain\Monkey\Functions;
 use PHPUnit\Framework\TestCase;
 
@@ -28,7 +28,7 @@ class SiennaWidgetTest extends TestCase {
 		);
 
 		Functions\when( 'get_locale' )->justReturn( 'pt_BR' );
-		Functions\when( 'plugin_dir_url' )->justReturn( 'https://example.com/wp-content/plugins/bauhaus-acessibilidade-br/assets/js/' );
+		Functions\when( 'plugin_dir_url' )->justReturn( 'https://example.com/wp-content/plugins/bauhaus-accessibility/assets/js/' );
 	}
 
 	protected function tearDown(): void {

@@ -1,0 +1,52 @@
+name: Deploy to WordPress.org
+
+# Publishes the plugin to the WordPress.org SVN repository whenever a GitHub
+# Release is published. The release tag must match the plugin version and the
+# "Stable tag" in readme.txt (e.g. tag "1.0.0" -> Stable tag: 1.0.0).
+#
+# Prerequisites (one-time):
+#   1. The plugin must be approved and hosted on WordPress.org (the SVN repo
+#      https://plugins.svn.wordpress.org/<slug>/ must exist).
+#   2. Add repository secrets (Settings → Secrets and variables → Actions):
+#        WPORG_SVN_USERNAME  - your WordPress.org username
+#        WPORG_SVN_PASSWORD  - your WordPress.org account password
+#
+# Files shipped to SVN trunk are everything except what .distignore excludes.
+# Banners/icons/screenshots live in .wordpress-org/ and go to SVN /assets.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  # Gate: run the official Plugin Check before publishing. If it fails, the
+  # deploy job below is skipped and nothing ships to WordPress.org.
+  plugin-check:
+    name: Plugin Check (PCP) gate
+    uses: ./.github/workflows/plugin-check.yml
+
+  deploy:
+    name: Deploy to WordPress.org SVN
+    needs: plugin-check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: WordPress Plugin Deploy
+        id: deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          generate-zip: true
+        env:
+          SVN_USERNAME: ${{ secrets.WPORG_SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
+          SLUG: bauhaus-accessibility
+          ASSETS_DIR: .wordpress-org
+
+      - name: Attach the built zip to the GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.deploy.outputs.zip-path }}

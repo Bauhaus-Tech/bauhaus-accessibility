@@ -1,0 +1,24 @@
+# Files that must NOT go in the WordPress.org distribution ZIP.
+# The canonical readme is readme.txt; README.md is GitHub-only.
+
+/.git
+/.github
+/.gitignore
+/.distignore
+/.wordpress-org
+/README.md
+/AGENTS.md
+/PLAN.md
+/bin
+/build
+/docs
+/tests
+/vendor
+/composer.json
+/composer.lock
+/phpunit.xml.dist
+/phpcs.xml.dist
+/phpstan.neon.dist
+/patchwork.json
+/.phpunit.result.cache
+*.zip

@@ -1,29 +1,38 @@
-=== Bauhaus Acessibilidade BR ===
-Contributors: bauhaus
-Tags: accessibility, acessibilidade, vlibras, libras, sienna, inclusion, inclusao
+=== Bauhaus Accessibility ===
+Contributors: bauhaustech, marvila
+Tags: accessibility, vlibras, libras, inclusion, inclusao
 Requires at least: 6.0
-Tested up to: 6.7
-Requires PHP: 7.4
+Tested up to: 7.0
+Requires PHP: 8.2
 Stable tag: 1.0.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: GPL-3.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Adds the VLibras sign language widget and the Sienna accessibility toolbar to your WordPress site.
+Adds the VLibras sign language widget and the Sienna accessibility toolbar to your WordPress site. Available in English and Portuguese (Brazil).
 
 == Description ==
 
-Bauhaus Acessibilidade BR integrates two accessibility tools into your WordPress site:
+Bauhaus Accessibility integrates two accessibility tools into your WordPress site:
 
 * **VLibras Widget** — The Brazilian government's Libras (Brazilian Sign Language) virtual interpreter, helping deaf users access your content.
 * **Sienna Accessibility Widget** — A full-featured accessibility toolbar with contrast adjustment, font size control, screen reader, dyslexia-friendly font, and more.
 
 Both widgets appear as stacked buttons on the side of the page. You choose left or right.
 
+== Languages ==
+
+This plugin is available in:
+
+* English (default)
+* Portuguese (Brazil) — `pt_BR`
+
+Translations are loaded automatically based on your site's language setting.
+
 == Installation ==
 
-1. Upload the plugin files to `/wp-content/plugins/bauhaus-acessibilidade-br` or install directly from the WordPress plugin repository.
+1. Upload the plugin files to `/wp-content/plugins/bauhaus-accessibility` or install directly from the WordPress plugin repository.
 2. Activate the plugin through the "Plugins" menu in WordPress.
-3. Go to Settings → Acessibilidade BR to enable the widgets you want.
+3. Go to Settings → Accessibility to enable the widgets you want.
 
 == Frequently Asked Questions ==
 
@@ -59,4 +68,4 @@ This plugin bundles the following third-party libraries:
 * VLibras widget with enable/disable toggle.
 * Sienna Accessibility widget with enable/disable toggle.
 * Left/right position selector.
-* Settings page under Settings → Acessibilidade BR.
+* Settings page under Settings → Accessibility.

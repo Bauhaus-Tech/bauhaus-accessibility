@@ -1,0 +1,30 @@
+name: Update WordPress.org readme & assets
+
+# Pushes readme.txt and the .wordpress-org assets (banner/icon/screenshots) to
+# the WordPress.org SVN trunk/assets WITHOUT cutting a new release. Useful for
+# fixing typos in the store listing or swapping a banner between releases.
+#
+# Uses the same secrets as deploy.yml (WPORG_SVN_USERNAME / WPORG_SVN_PASSWORD).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'readme.txt'
+      - '.wordpress-org/**'
+
+jobs:
+  trunk:
+    name: Push readme & assets to trunk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: WordPress.org plugin asset/readme update
+        uses: 10up/action-wordpress-plugin-asset-update@stable
+        env:
+          SVN_USERNAME: ${{ secrets.WPORG_SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
+          SLUG: bauhaus-accessibility
+          ASSETS_DIR: .wordpress-org

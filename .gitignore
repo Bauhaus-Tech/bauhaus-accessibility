@@ -1,7 +1,19 @@
-vendor/
-node_modules/
-*.log
-.env
+# OS / editor
 .DS_Store
 Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Dependencies / builds
+node_modules/
+vendor/
+
+# Artifacts
+/build/
+*.zip
+*.log
 .phpunit.result.cache
+
+# Local SVN credentials (never commit)
+.env.svn

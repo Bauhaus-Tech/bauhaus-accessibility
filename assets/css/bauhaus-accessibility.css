@@ -11,7 +11,7 @@
 
 /* Sienna z-index stacking */
 .asw-menu-btn {
-	z-index: 500000;
+	z-index: 500000 !important;
 }
 
 /* VLibras horizontal alignment — match Sienna's 10px offset */

@@ -1,6 +1,6 @@
 <?php
 /**
- * PHPUnit bootstrap for Bauhaus Acessibilidade BR tests.
+ * PHPUnit bootstrap for Bauhaus Accessibility tests.
  *
  * Uses Brain Monkey to mock WordPress functions so tests can run without
  * a full WordPress installation.

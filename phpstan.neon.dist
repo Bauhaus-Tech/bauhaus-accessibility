@@ -1,8 +1,8 @@
 parameters:
     level: 5
     paths:
-        - bauhaus-acessibilidade-br.php
-        - src/
+        - bauhaus-accessibility.php
+        - includes/
         - uninstall.php
     excludePaths:
         analyseAndScan:

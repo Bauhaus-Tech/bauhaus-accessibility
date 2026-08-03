@@ -5,10 +5,10 @@
  * Outputs the Sienna UMD bundle inline (with CDN asset URLs patched to local
  * paths) so no external requests are made for Sienna assets.
  *
- * @package Bauhaus_Acessibilidade\Frontend
+ * @package Bauhaus_Accessibility\Frontend
  */
 
-namespace Bauhaus_Acessibilidade\Frontend;
+namespace Bauhaus_Accessibility\Frontend;
 
 /**
  * Handles front-end output for the Sienna Accessibility Widget.
@@ -100,6 +100,9 @@ class SiennaWidget {
 					'primaryColor:"#0848ca"',
 					// Raise z-index above VLibras (2147483645)
 					'z-index:500000',
+					// Fix: first close-btn click was a no-op because the toggle
+					// function D() treated an unset style.display ("") like "none".
+					'T.style.display==="none"||T.style.display===""',
 				),
 				array(
 					'--asw-btn-size: 40px',
@@ -110,27 +113,28 @@ class SiennaWidget {
 					',20],size:40,',
 					'primaryColor:"#005eb8"',
 					'z-index:2147483646',
+					'T.style.display==="none"',
 				),
 				$js
 			);
 
 			wp_add_inline_script( 'sienna-accessibility', $js );
 
-		// Remove Sienna footer branding whenever it appears in the DOM.
-		// The footer is created dynamically when the menu opens, so we
-		// watch for it with a MutationObserver.
-		wp_add_inline_script(
-			'sienna-accessibility',
-			'(function(){'
-				. 'new MutationObserver(function(){'
-				. 'var f=document.querySelector(".asw-footer");'
-				. 'if(f){f.remove();}'
-				. 'var s=document.getElementById("asw-statement-link");'
-				. 'if(s){s.remove();}'
-				. '}).observe(document.body||document.documentElement,{childList:true,subtree:true});'
-				. '})();',
-			'after'
-		);
+			// Remove Sienna footer branding whenever it appears in the DOM.
+			// The footer is created dynamically when the menu opens, so we
+			// watch for it with a MutationObserver.
+			wp_add_inline_script(
+				'sienna-accessibility',
+				'(function(){'
+					. 'new MutationObserver(function(){'
+					. 'var f=document.querySelector(".asw-footer");'
+					. 'if(f){f.remove();}'
+					. 'var s=document.getElementById("asw-statement-link");'
+					. 'if(s){s.remove();}'
+					. '}).observe(document.body||document.documentElement,{childList:true,subtree:true});'
+					. '})();',
+				'after'
+			);
 		}
 
 		// Position CSS for the widget buttons (side + stacking).

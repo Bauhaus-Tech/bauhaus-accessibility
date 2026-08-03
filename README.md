@@ -1,4 +1,4 @@
-# Bauhaus Acessibilidade BR
+# Bauhaus Accessibility
 
 WordPress plugin that adds accessibility widgets to your site:
 
@@ -8,7 +8,7 @@ WordPress plugin that adds accessibility widgets to your site:
 ## Requirements
 
 - WordPress 6.0+
-- PHP 7.4+
+- PHP 8.2+
 
 ## Development
 
@@ -21,4 +21,4 @@ vendor/bin/phpstan analyse  # Static analysis
 
 ## License
 
-GPL-2.0-or-later — see [readme.txt](readme.txt) and the plugin header.
+GPL-3.0-or-later — see [readme.txt](readme.txt) and the plugin header.

@@ -1,0 +1,73 @@
+# Copyright (C) 2026 Bauhaus Tech
+# This file is distributed under the GPL-3.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Bauhaus Accessibility 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bauhaus-accessibility\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-02T19:15:24+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: bauhaus-accessibility\n"
+
+#. Plugin Name of the plugin
+#: bauhaus-accessibility.php
+msgid "Bauhaus Accessibility"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: bauhaus-accessibility.php
+msgid "https://bauhaustech.com/"
+msgstr ""
+
+#. Description of the plugin
+#: bauhaus-accessibility.php
+msgid "Adds the VLibras sign language widget and the Sienna accessibility toolbar to your WordPress site."
+msgstr ""
+
+#. Author of the plugin
+#: bauhaus-accessibility.php
+msgid "Bauhaus Tech"
+msgstr ""
+
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:65
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:66
+#: includes/Core/Plugin.php:65
+#: includes/Core/Plugin.php:66
+msgid "Accessibility"
+msgstr ""
+
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:97
+#: includes/Core/Plugin.php:97
+msgid "Widget Settings"
+msgstr ""
+
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:104
+#: includes/Core/Plugin.php:104
+msgid "Enable VLibras Sign Language Interpreter"
+msgstr ""
+
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:112
+#: includes/Core/Plugin.php:112
+msgid "Enable Accessibility Widget"
+msgstr ""
+
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:120
+#: includes/Core/Plugin.php:120
+msgid "Widget Position"
+msgstr ""
+
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:221
+#: includes/Core/Plugin.php:221
+msgid "Right"
+msgstr ""
+
+#: build/bauhaus-accessibility/includes/Core/Plugin.php:231
+#: includes/Core/Plugin.php:231
+msgid "Left"
+msgstr ""

@@ -3,9 +3,9 @@
  * Tests for the VlibrasWidget front-end class.
  */
 
-namespace Bauhaus_Acessibilidade\Tests\Frontend;
+namespace Bauhaus_Accessibility\Tests\Frontend;
 
-use Bauhaus_Acessibilidade\Frontend\VlibrasWidget;
+use Bauhaus_Accessibility\Frontend\VlibrasWidget;
 use Brain\Monkey\Functions;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +24,7 @@ class VlibrasWidgetTest extends TestCase {
 			)
 		);
 
-		Functions\when( 'plugin_dir_url' )->justReturn( 'https://example.com/wp-content/plugins/bauhaus-acessibilidade-br/' );
+		Functions\when( 'plugin_dir_url' )->justReturn( 'https://example.com/wp-content/plugins/bauhaus-accessibility/' );
 	}
 
 	protected function tearDown(): void {

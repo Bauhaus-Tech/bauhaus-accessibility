@@ -1,0 +1,40 @@
+name: Plugin Check (PCP)
+
+# Runs the official WordPress Plugin Check (the same tool WordPress.org runs on
+# submission) on every push and pull request, plus manually on demand. This is
+# the automated equivalent of `bin/plugin-check.sh` — keep them in sync.
+#
+# It checks the *distributable* plugin (build/<slug>) produced by bin/build-zip.sh,
+# so dev-only files excluded by .distignore (bin/, .github, docs, …) don't
+# produce false positives.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # Lets other workflows (e.g. deploy.yml) call this as a gate before shipping.
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  plugin-check:
+    name: WordPress Plugin Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build the distributable plugin
+        run: bash bin/build-zip.sh
+
+      - name: Run Plugin Check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: build/bauhaus-accessibility
+          # Fail the job on errors; warnings are reported but non-blocking.
+          categories: |
+            general
+            plugin_repo

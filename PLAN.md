@@ -1,4 +1,4 @@
-# PLAN — Bauhaus Acessibilidade BR
+# PLAN — Bauhaus Accessibility
 
 ## Goal
 
@@ -15,7 +15,7 @@ accessibility widgets to the front-end of any WordPress site:
 
 Both widgets appear as **two vertically-stacked buttons, vertically centered**. The
 administrator can choose whether the buttons appear on the **far right** or **far left**
-of the page. A settings page (under Settings → Acessibilidade BR) lets the administrator
+of the page. A settings page (under Settings → Accessibility) lets the administrator
 enable/disable each widget independently, choose the side, and select the sign language
 for VLibras (initially only Libras).
 
@@ -24,8 +24,8 @@ for VLibras (initially only Libras).
 ## Architecture
 
 ```
-bauhaus-acessibilidade-br/
-├── bauhaus-acessibilidade-br.php    # Plugin bootstrap
+bauhaus-accessibility/
+├── bauhaus-accessibility.php    # Plugin bootstrap
 ├── readme.txt                       # wordpress.org readme
 ├── src/
 │   ├── Admin/
@@ -51,7 +51,7 @@ bauhaus-acessibilidade-br/
 │   └── css/
 │       └── bauhaus-accessibility.css    # Widget button positioning
 ├── languages/
-│   └── bauhaus-acessibilidade-br.pot    # Translation template
+│   └── bauhaus-accessibility.pot    # Translation template
 └── uninstall.php                        # Cleanup on uninstall
 ```
 
@@ -144,7 +144,7 @@ relative path.
 
 ### Phase 04 — Admin Settings Page
 
-**Scope:** A polished admin settings page under **Settings → Acessibilidade BR**.
+**Scope:** A polished admin settings page under **Settings → Accessibility**.
 
 - WordPress Settings API with proper nonce, sanitization, and validation
 - Checkbox: "Enable VLibras Sign Language Interpreter"
@@ -185,9 +185,9 @@ relative path.
 
 1. **VLibras: hybrid approach.** Bundle `vlibras-plugin.js` (~50 KB) locally. Chunks and
    Unity assets (~5+ MB) continue loading from `vlibras.gov.br/app/` at runtime. A filter
-   `bauhaus_acessibilidade_vlibras_root_url` lets advanced users proxy/self-host.
+   `bauhaus_accessibility_vlibras_root_url` lets advanced users proxy/self-host.
 
-2. **Settings menu placement.** Under Settings → Acessibilidade BR, following wordpress.org
+2. **Settings menu placement.** Under Settings → Accessibility, following wordpress.org
    convention for utility plugins.
 
 3. **Clean implementation.** The old `esun-acessibilidade-br` plugin targets Sienna 1.x
@@ -213,7 +213,7 @@ relative path.
    left and right sides. This is straightforward CSS but must be tested on mobile.
 
 4. **WordPress.org review: remote asset loading.** VLibras chunks loading from
-   `vlibras.gov.br` will be disclosed in the readme. The `bauhaus_acessibilidade_vlibras_root_url`
+   `vlibras.gov.br` will be disclosed in the readme. The `bauhaus_accessibility_vlibras_root_url`
    filter provides an escape hatch for reviewers and advanced users.
 
 ---

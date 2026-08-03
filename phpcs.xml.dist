@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<ruleset name="Bauhaus Acessibilidade BR">
-    <description>WordPress-Extra coding standard for Bauhaus Acessibilidade BR</description>
+<ruleset name="Bauhaus Accessibility">
+    <description>WordPress-Extra coding standard for Bauhaus Accessibility</description>
 
     <!-- Only scan our own source -->
-    <file>bauhaus-acessibilidade-br.php</file>
-    <file>src/</file>
+    <file>bauhaus-accessibility.php</file>
+    <file>includes/</file>
     <file>tests/</file>
     <file>uninstall.php</file>
 
@@ -18,7 +18,7 @@
 
     <!-- Allow PSR-4 file naming (class Name {} inside class-name.php is fine) -->
     <rule ref="WordPress.Files.FileName">
-        <exclude-pattern>src/</exclude-pattern>
+        <exclude-pattern>includes/</exclude-pattern>
         <exclude-pattern>tests/</exclude-pattern>
     </rule>
 
@@ -31,7 +31,7 @@
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
         <properties>
             <property name="prefixes" type="array">
-                <element value="bauhaus_acessibilidade"/>
+                <element value="bauhaus_accessibility"/>
             </property>
         </properties>
     </rule>
