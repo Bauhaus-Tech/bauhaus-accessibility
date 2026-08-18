@@ -20,6 +20,9 @@
 - The strengthened position test initially passed because left-position support already existed: `vendor/bin/phpunit --filter test_init_script_preserves_configured_position_with_government_root_path tests/Frontend/VlibrasWidgetTest.php` reported 1 test, 1 assertion.
 - Sensitivity probe: a temporary mutation that always assigned the right-side code caused `vendor/bin/phpunit tests/Frontend/VlibrasWidgetTest.php` to report 7 tests, 10 assertions, and 1 error. The error was the expectation for the left-side initializer, which the mutated implementation did not call.
 - Restoration: the saved production file was restored without a Git reset, and `vendor/bin/phpunit tests/Frontend/VlibrasWidgetTest.php` then passed: 7 tests, 10 assertions.
+- The new right-position test initially passed because right-position support already existed: `vendor/bin/phpunit --filter test_init_script_preserves_right_position_with_government_root_path tests/Frontend/VlibrasWidgetTest.php` reported 1 test, 1 assertion.
+- Sensitivity probe: a temporary mutation that always assigned the left-side code caused `vendor/bin/phpunit tests/Frontend/VlibrasWidgetTest.php` to report 9 tests, 12 assertions, and 1 error. The error was the expectation for the right-side initializer, which the mutated implementation did not call.
+- Restoration: the saved production file was restored without a Git reset, and `vendor/bin/phpunit tests/Frontend/VlibrasWidgetTest.php` then passed: 9 tests, 12 assertions.
 
 ### R3 — No bundled VLibras script
 

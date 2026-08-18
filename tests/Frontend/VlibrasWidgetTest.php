@@ -132,6 +132,39 @@ class VlibrasWidgetTest extends TestCase {
 	}
 
 	/**
+	 * The init script must keep the right-side position when it is configured.
+	 */
+	public function test_init_script_preserves_right_position_with_government_root_path(): void {
+		$inline_script = null;
+
+		Functions\expect( 'wp_enqueue_script' )
+			->once()
+			->andReturn( true );
+
+		Functions\expect( 'wp_add_inline_script' )
+			->once()
+			->with(
+				'vlibras-plugin',
+				\Mockery::on(
+					function ( string $script ) use ( &$inline_script ) {
+						$inline_script = $script;
+						return 'new window.VLibras.Widget({rootPath:"https://vlibras.gov.br/app",position:"R"});' === $script;
+					}
+				)
+			)
+			->andReturn( true );
+
+		$options = array(
+			'enable_vlibras'  => true,
+			'widget_position' => 'right',
+		);
+		$widget  = new VlibrasWidget();
+		$widget->maybe_enqueue( $options );
+
+		$this->assertNotNull( $inline_script );
+	}
+
+	/**
 	 * The footer markup must include the VLibras container.
 	 */
 	public function test_footer_markup_contains_vlibras_container(): void {
