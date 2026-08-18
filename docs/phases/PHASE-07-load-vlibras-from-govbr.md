@@ -33,3 +33,7 @@ placement while WordPress loads the official widget script directly from
 
 - The government-hosted service must be reachable for the widget to load. This
   external dependency is disclosed in the installation documentation.
+- Browser verification found that the government widget's supplied access-button
+  markup does not receive keyboard focus or open with Enter. Pointer activation
+  works. Improving that third-party interaction is outside this phase and needs
+  an owner decision.

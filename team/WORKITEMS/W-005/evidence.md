@@ -28,3 +28,22 @@
 
 - RED: `vendor/bin/phpunit --filter test_plugin_does_not_include_a_local_vlibras_script tests/Frontend/VlibrasWidgetTest.php` failed with one failure because `assets/js/vlibras-plugin.js` existed.
 - GREEN: the same command passed after removal: 1 test, 1 assertion.
+
+## Browser evidence
+
+- Runner: Playwright 1.62.1 with headless Chromium. Route:
+  `http://terraetravel.local/`, mapped to the local loopback server for the
+  test. Viewport: 1280×720.
+- Enabled left: the widget loaded from
+  `https://vlibras.gov.br/app/vlibras-plugin.js?ver=1.0.0`, requested its
+  gov.br icon, popup, and chunk assets, rendered on the left, and opened its
+  panel by pointer. There were no page errors.
+- Enabled right: the same remote script and assets loaded, the widget rendered
+  on the right, and pointer activation opened its panel. There were no page
+  errors.
+- Disabled: no `[vw]` markup, VLibras script tag, or request to `vlibras.gov.br`
+  appeared. There were no page errors.
+- Keyboard observation: the government widget's supplied access button did not
+  receive focus and Enter did not open its panel in either enabled state. This
+  is recorded for an owner decision; no third-party widget behavior was changed
+  in PHASE-07.
