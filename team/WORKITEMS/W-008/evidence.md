@@ -14,5 +14,16 @@
 - GREEN: the same command completed successfully after adding a suppression only
   to the local file read, with a comment explaining why an HTTP request is not
   appropriate.
+
+### Green command output
+
+Command: `composer lint`
+
+```text
+
+```
+
+Exit status: 0. The command emitted no output.
+
 - Regression: `composer test` passed with 33 tests and 56 assertions.
 - Static analysis: `composer analyse` passed with no errors.
