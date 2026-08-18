@@ -44,5 +44,5 @@
   appeared. There were no page errors.
 - Keyboard observation: the government widget's supplied access button did not
   receive focus and Enter did not open its panel in either enabled state. This
-  is recorded for an owner decision; no third-party widget behavior was changed
-  in PHASE-07.
+  is an owner-approved tracked limitation; no third-party widget behavior was
+  changed in PHASE-07.

@@ -35,5 +35,4 @@ placement while WordPress loads the official widget script directly from
   external dependency is disclosed in the installation documentation.
 - Browser verification found that the government widget's supplied access-button
   markup does not receive keyboard focus or open with Enter. Pointer activation
-  works. Improving that third-party interaction is outside this phase and needs
-  an owner decision.
+  works. The owner accepted this as a tracked limitation for a future phase.

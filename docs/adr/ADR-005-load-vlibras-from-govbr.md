@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed — becomes accepted when PHASE-07 is approved.
+Accepted.
 
 ## Context
 
