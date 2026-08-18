@@ -186,6 +186,11 @@ relative path.
 widget script, preserve the configured side, remove the local bundle, and document
 the external dependency.
 
+### Phase 08 — Clear the Sienna lint warning
+
+**Scope:** Document the intentional local Sienna bundle read narrowly enough for
+the project-wide coding-standard check to complete without warnings.
+
 ---
 
 ## Resolved Decisions
