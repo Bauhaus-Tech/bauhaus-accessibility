@@ -2,8 +2,8 @@
 /**
  * VLibras Widget front-end integration.
  *
- * Enqueues the local VLibras plugin script, injects the container markup
- * into wp_footer, and initializes the VLibras interpreter.
+ * Enqueues the government-hosted VLibras plugin script, injects the container
+ * markup into wp_footer, and initializes the VLibras interpreter.
  *
  * @package Bauhaus_Accessibility\Frontend
  */
@@ -14,6 +14,16 @@ namespace Bauhaus_Accessibility\Frontend;
  * Handles front-end output for the VLibras Sign Language widget.
  */
 class VlibrasWidget {
+
+	/**
+	 * Official VLibras widget script URL.
+	 *
+	 * The plugin intentionally does not distribute this third-party script: the
+	 * government service remains its authoritative source.
+	 *
+	 * @var string
+	 */
+	const WIDGET_SCRIPT_URL = 'https://vlibras.gov.br/app/vlibras-plugin.js';
 
 	/**
 	 * Default rootPath for VLibras assets (chunks, avatars).
@@ -37,10 +47,10 @@ class VlibrasWidget {
 
 		$position = $options['widget_position'] ?? 'right';
 
-		// Enqueue the local VLibras plugin script (footer, before the init).
+		// Load the official widget script in the footer, before its initializer.
 		wp_enqueue_script(
 			'vlibras-plugin',
-			plugin_dir_url( __FILE__ ) . '../../assets/js/vlibras-plugin.js',
+			self::WIDGET_SCRIPT_URL,
 			array(),
 			'1.0.0',
 			true

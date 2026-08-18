@@ -41,16 +41,16 @@ class VlibrasWidgetTest extends TestCase {
 	}
 
 	/**
-	 * When enabled, the widget must enqueue the local VLibras script.
+	 * When enabled, the widget must enqueue the official government-hosted script.
 	 */
-	public function test_enabled_widget_enqueues_script(): void {
+	public function test_enabled_widget_enqueues_government_hosted_script(): void {
 		$enqueued = array();
 
 		Functions\expect( 'wp_enqueue_script' )
 			->once()
 			->with(
 				'vlibras-plugin',
-				\Mockery::on( fn( $src ) => strpos( $src, 'vlibras-plugin.js' ) !== false ),
+				'https://vlibras.gov.br/app/vlibras-plugin.js',
 				array(),
 				\Mockery::any(),
 				true
@@ -76,6 +76,15 @@ class VlibrasWidgetTest extends TestCase {
 	}
 
 	/**
+	 * The plugin must not distribute a local VLibras bundle.
+	 */
+	public function test_plugin_does_not_include_a_local_vlibras_script(): void {
+		$this->assertFileDoesNotExist(
+			dirname( __DIR__, 2 ) . '/assets/js/vlibras-plugin.js'
+		);
+	}
+
+	/**
 	 * When disabled, nothing must be enqueued.
 	 */
 	public function test_disabled_widget_enqueues_nothing(): void {
@@ -90,9 +99,9 @@ class VlibrasWidgetTest extends TestCase {
 	}
 
 	/**
-	 * The init script must call VLibras.Widget with the gov.br rootPath.
+	 * The init script must preserve the configured side with the gov.br rootPath.
 	 */
-	public function test_init_script_calls_vlibras_widget(): void {
+	public function test_init_script_preserves_configured_position_with_government_root_path(): void {
 		$inline_script = null;
 
 		Functions\expect( 'wp_enqueue_script' )
@@ -106,10 +115,40 @@ class VlibrasWidgetTest extends TestCase {
 				\Mockery::on(
 					function ( string $script ) use ( &$inline_script ) {
 						$inline_script = $script;
-						return strpos( $script, 'VLibras.Widget' ) !== false
-							&& strpos( $script, 'vlibras.gov.br' ) !== false
-							&& strpos( $script, 'rootPath' ) !== false
-							&& strpos( $script, 'position' ) !== false;
+						return 'new window.VLibras.Widget({rootPath:"https://vlibras.gov.br/app",position:"L"});' === $script;
+					}
+				)
+			)
+			->andReturn( true );
+
+		$options = array(
+			'enable_vlibras'  => true,
+			'widget_position' => 'left',
+		);
+		$widget  = new VlibrasWidget();
+		$widget->maybe_enqueue( $options );
+
+		$this->assertNotNull( $inline_script );
+	}
+
+	/**
+	 * The init script must keep the right-side position when it is configured.
+	 */
+	public function test_init_script_preserves_right_position_with_government_root_path(): void {
+		$inline_script = null;
+
+		Functions\expect( 'wp_enqueue_script' )
+			->once()
+			->andReturn( true );
+
+		Functions\expect( 'wp_add_inline_script' )
+			->once()
+			->with(
+				'vlibras-plugin',
+				\Mockery::on(
+					function ( string $script ) use ( &$inline_script ) {
+						$inline_script = $script;
+						return 'new window.VLibras.Widget({rootPath:"https://vlibras.gov.br/app",position:"R"});' === $script;
 					}
 				)
 			)

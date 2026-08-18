@@ -79,6 +79,7 @@ class SiennaWidget {
 		// Read the UMD bundle and patch CDN URLs to local paths.
 		$umd_file = dirname( __DIR__, 2 ) . '/' . self::UMD_PATH;
 		if ( file_exists( $umd_file ) ) {
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- This reads a local bundled asset; an HTTP request is not appropriate.
 			$js = file_get_contents( $umd_file );
 
 			// Patch CDN asset URLs → local plugin directory.
