@@ -31,9 +31,8 @@
 
 ## Browser evidence
 
-- Runner: Playwright 1.62.1 with headless Chromium. Route:
-  `http://terraetravel.local/`, mapped to the local loopback server for the
-  test. Viewport: 1280×720.
+- A headless browser verification used route `http://terraetravel.local/`,
+  mapped to the local loopback server for the test. Viewport: 1280×720.
 - Enabled left: the widget loaded from
   `https://vlibras.gov.br/app/vlibras-plugin.js?ver=1.0.0`, requested its
   gov.br icon, popup, and chunk assets, rendered on the left, and opened its
