@@ -9,9 +9,8 @@ accessibility widgets to the front-end of any WordPress site:
    font size, screen reader, profiles, etc.). All Sienna assets (JS, fonts, locales) are
    bundled locally — no external CDN calls.
 2. **VLibras Widget** — the Brazilian government's Libras (Brazilian Sign Language)
-   virtual interpreter. The VLibras plugin script is bundled locally; its dynamically
-   loaded chunks and assets continue to load from the VLibras CDN (see §External
-   Dependencies).
+   virtual interpreter. Its official script and runtime assets load directly from
+   `vlibras.gov.br` when the widget is enabled (see §External Dependencies).
 
 Both widgets appear as **two vertically-stacked buttons, vertically centered**. The
 administrator can choose whether the buttons appear on the **far right** or **far left**
@@ -39,8 +38,7 @@ bauhaus-accessibility/
 │       └── AssetManifest.php        # Registers all scripts/styles with WordPress
 ├── assets/
 │   ├── js/
-│   │   ├── sienna-accessibility.umd.js   # Sienna 2.2.x bundle
-│   │   └── vlibras-plugin.js             # VLibras plugin bundle
+│   │   └── sienna-accessibility.umd.js   # Sienna 2.2.x bundle
 │   ├── fonts/
 │   │   ├── OpenDyslexic3-Regular.ttf
 │   │   └── OpenDyslexic3-Regular.woff
@@ -60,11 +58,11 @@ bauhaus-accessibility/
 | Decision | Rationale |
 |----------|-----------|
 | **Sienna assets fully local** | WordPress.org guidelines prefer self-contained plugins. The Sienna UMD bundle references fonts and locales at predictable paths; these are downloaded and placed under `assets/`. |
-| **VLibras main script local, chunks remote** | VLibras is a webpack code-split bundle that loads `vlibras-plugin.chunk.js` (a ~5 MB Unity WebGL build) and dozens of avatar/texture assets dynamically. Re-hosting those would require: (a) downloading and maintaining a complete mirror of `https://vlibras.gov.br/app/`, (b) patching webpack's `__webpack_public_path__` to point to the local mirror, (c) handling updates. The cost/benefit is poor for a v1. The main `vlibras-plugin.js` is small (~50 KB) and self-contained enough to bundle; the heavy assets remain on the government CDN. We document this in the readme. |
+| **VLibras script and assets hosted by gov.br** | The official service remains the authoritative source for its script and runtime assets. Distributing a local copy raised review and licensing concerns, while remote loading keeps the service version under its maintainer's control. The readme discloses this external dependency. |
 | **Two separate widget classes** | SRP: each widget has its own enqueue logic, markup injection, and toggle. The admin page is a third concern. |
 | **WordPress Settings API** | Standard, secure, no custom table needed. Two checkboxes + one dropdown → single option array. |
 | **Side-selectable vertical centering via CSS** | The admin chooses left or right. CSS custom properties set the side; a single class toggles between `left: 0` / `right: 0`. The old plugin's CSS approach (`position: fixed; top: calc(50% ...)`) works as a starting point; we refine it for two stacked buttons. |
-| **No build step** | WordPress.org plugins are distributed as plain PHP/JS/CSS. We ship the unminified Sienna UMD source and the VLibras bundle as-is. No composer/npm build required at install time. |
+| **No build step** | WordPress.org plugins are distributed as plain PHP/JS/CSS. We ship the unminified Sienna UMD source; VLibras loads from its official service. No composer/npm build required at install time. |
 | **Settings under Settings menu** | WordPress.org convention for utility/configuration plugins. Not a top-level menu. |
 | **Clean implementation** | The old `esun-acessibilidade-br` plugin is procedural and targets Sienna 1.x. The new Sienna 2.x has a completely different API and positioning system. Starting fresh avoids carrying dead abstraction. |
 
@@ -75,7 +73,7 @@ bauhaus-accessibility/
 | Library | Version | License | Bundled? | Notes |
 |---------|---------|---------|----------|-------|
 | Sienna Accessibility | 2.2.x | MIT | **Yes** (JS + fonts + ~50 locale JSONs) | MIT is GPLv2-compatible. Bundled under `assets/js/`, `assets/fonts/`, `assets/locales/`. |
-| VLibras Plugin | latest from vlibras.gov.br | Public (gov.br) | **Main script only** | `assets/js/vlibras-plugin.js`. Chunks still load from `vlibras.gov.br/app/` at runtime. |
+| VLibras Widget | latest from vlibras.gov.br | Government-hosted service | **No** | Widget script and runtime assets load from `https://vlibras.gov.br` when enabled. |
 | OpenDyslexic font | 3 | SIL-OFL / MIT | **Yes** (bundled with Sienna) | OpenDyslexic is SIL Open Font License — compatible. |
 
 ---
@@ -122,9 +120,12 @@ relative path.
 
 ### Phase 03 — VLibras Widget (Frontend)
 
+> Superseded in part by Phase 07: VLibras now loads its official widget script
+> directly from `vlibras.gov.br`; the plugin no longer bundles that script.
+
 **Scope:** VLibras virtual interpreter appears on the front-end when enabled.
 
-- `VlibrasWidget.php`: enqueues the local `vlibras-plugin.js`, injects the VLi bras
+- `VlibrasWidget.php`: enqueues the official `vlibras-plugin.js` URL, injects the VLibras
   container markup into `wp_footer`, and calls `new window.VLibras.Widget(...)`
 - The widget button is positioned via CSS to stack below/above the Sienna button
 - Admin toggle wired
@@ -179,13 +180,20 @@ relative path.
 - Verify both widgets work simultaneously without conflict
 - Verify widget buttons stack correctly on mobile
 
+### Phase 07 — Load VLibras from gov.br
+
+**Scope:** Replace the bundled VLibras script with the official government-hosted
+widget script, preserve the configured side, remove the local bundle, and document
+the external dependency.
+
 ---
 
 ## Resolved Decisions
 
-1. **VLibras: hybrid approach.** Bundle `vlibras-plugin.js` (~50 KB) locally. Chunks and
-   Unity assets (~5+ MB) continue loading from `vlibras.gov.br/app/` at runtime. A filter
-   `bauhaus_accessibility_vlibras_root_url` lets advanced users proxy/self-host.
+1. **VLibras: government-hosted approach.** Load the official `vlibras-plugin.js` script
+   and its runtime assets directly from `vlibras.gov.br` when enabled. The plugin does not
+   distribute VLibras JavaScript; the configured left/right position remains in its
+   initializer.
 
 2. **Settings menu placement.** Under Settings → Accessibility, following wordpress.org
    convention for utility plugins.
@@ -212,9 +220,9 @@ relative path.
    one relative to the other (e.g., Sienna at center, VLibras 60px above/below) on both
    left and right sides. This is straightforward CSS but must be tested on mobile.
 
-4. **WordPress.org review: remote asset loading.** VLibras chunks loading from
-   `vlibras.gov.br` will be disclosed in the readme. The `bauhaus_accessibility_vlibras_root_url`
-   filter provides an escape hatch for reviewers and advanced users.
+4. **WordPress.org review: remote asset loading.** The VLibras widget script and its
+   runtime assets load from `vlibras.gov.br` only when the administrator enables VLibras.
+   This external dependency is disclosed in the readme.
 
 ---
 
@@ -226,7 +234,7 @@ relative path.
 4. Sienna button appears on front-end when enabled, stacked with VLibras button
 5. Both widgets work simultaneously without JS errors or style conflicts
 6. All Sienna assets load from the plugin's own directory (no CDN requests for Sienna)
-7. VLibras main script loads from the plugin directory; chunks load from vlibras.gov.br
+7. VLibras script and runtime assets load directly from vlibras.gov.br when enabled
 8. Zero PHPCS errors (WordPress-Extra standard)
 9. Zero Plugin Check (PCP) errors
 10. All user-facing strings are internationalized

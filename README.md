@@ -5,6 +5,18 @@ WordPress plugin that adds accessibility widgets to your site:
 - **VLibras** — Brazilian Sign Language (Libras) virtual interpreter
 - **Sienna** — Accessibility toolbar (contrast, font size, screen reader, etc.)
 
+## VLibras widget
+
+When an administrator enables VLibras in Settings → Accessibility, visitors see
+the government VLibras interpreter button on the configured left or right side
+of each public page. Selecting it opens the Libras interpretation interface.
+
+The plugin loads the official widget script and its runtime assets directly from
+`https://vlibras.gov.br` when the widget is enabled; it does not include a copy
+of the VLibras JavaScript. If that government service is unavailable, the
+VLibras button cannot load, while the rest of the site and the Sienna widget
+remain available.
+
 ## Requirements
 
 - WordPress 6.0+

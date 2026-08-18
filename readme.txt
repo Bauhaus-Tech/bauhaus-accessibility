@@ -42,7 +42,7 @@ They appear as two vertically-stacked buttons, vertically centered on the page. 
 
 = Does VLibras load external resources? =
 
-The main VLibras script is bundled with the plugin. At runtime, VLibras loads additional assets (the 3D avatar and animation data) from vlibras.gov.br. This is disclosed during plugin installation.
+Yes. When VLibras is enabled, its widget script and runtime assets load directly from `https://vlibras.gov.br`. No VLibras JavaScript is bundled with this plugin.
 
 = Is the Sienna widget fully self-contained? =
 
@@ -55,11 +55,12 @@ This plugin bundles the following third-party libraries:
 * **Sienna Accessibility Widget** (v2.2.333) — MIT License
   JavaScript, fonts, and locale files from https://github.com/bennyluk/Sienna-Accessibility-Widget
 
-* **VLibras Plugin** — vlibras.gov.br
-  Main plugin script bundled; additional assets loaded from vlibras.gov.br at runtime.
-
 * **OpenDyslexic Font** (v3) — SIL Open Font License
   Dyslexia-friendly typeface bundled with Sienna.
+
+== External Services ==
+
+* **VLibras Widget** — When enabled, the plugin loads `https://vlibras.gov.br/app/vlibras-plugin.js` and its runtime assets from `https://vlibras.gov.br` to provide the Libras interpreter. No VLibras code is bundled with this plugin.
 
 == Changelog ==
 
