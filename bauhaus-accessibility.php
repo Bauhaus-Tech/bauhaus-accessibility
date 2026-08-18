@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name:       Bauhaus Accessibility
- * Plugin URI:        https://bauhaustech.com/
  * Description:       Adds the VLibras sign language widget and the Sienna accessibility toolbar to your WordPress site.
  * Version:           1.0.0
  * Requires at least: 6.0
