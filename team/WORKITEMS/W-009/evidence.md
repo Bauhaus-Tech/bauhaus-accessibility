@@ -96,3 +96,22 @@
 - `composer analyse` completed with 0 errors.
 - `msgfmt --check` accepted the Brazilian Portuguese source PO, and
   `bin/build-zip.sh` produced the installable ZIP successfully.
+
+### Browser-test receipt
+
+- Runtime: WordPress 7.1, plugin version 1.0.0, Chromium at a 1280×720
+  viewport; route: `http://centrodememoria.local/wp-admin/options-general.php?page=bauhaus-accessibility`.
+- Pack provenance: the source PO had SHA-256
+  `84888aedda60797eb4f1609312abb1f5426ca01d41fdfa6c59816887101af7d2`.
+  `msgfmt` generated the temporary MO with SHA-256
+  `3338f261747a23ff43826aae4b606461747503a8bce079fffedb643324fa69e5`.
+- Procedure: compile the tracked PO; temporarily install the MO at
+  `wp-content/languages/plugins/bauhaus-accessibility-pt_BR.mo`; set the site
+  language to `pt_BR` only if necessary; activate the plugin; open the settings
+  route; check the translated labels and keyboard focus; deactivate the plugin
+  if it was initially inactive; remove the temporary MO and plugin symlink.
+- Result: every expected Portuguese label and the skip-link focus check passed.
+  The temporary plugin was initially inactive, the site language was already
+  `pt_BR`, and both temporary filesystem paths were confirmed absent after the
+  check. The administrator screenshot was deliberately not retained because it
+  is generated local-environment evidence rather than a distributable asset.
