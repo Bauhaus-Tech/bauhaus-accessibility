@@ -3,8 +3,9 @@
 # Builds an installable WordPress plugin zip containing only the runtime files.
 # Dev tooling (bin, README.md, CI) is excluded via .distignore.
 #
-# Output: <slug>-<version>.zip at the repo root, with a top-level <slug>/ folder
-# as WordPress expects.
+# Output defaults to <slug>-<version>.zip at the repo root, with a top-level
+# <slug>/ folder as WordPress expects. The two output paths can be overridden
+# so automated checks do not alter a maintainer's local build artifacts.
 #
 set -euo pipefail
 
@@ -20,9 +21,9 @@ if [ -z "$VERSION" ]; then
 	exit 1
 fi
 
-BUILD="$ROOT/build"
+BUILD="${BAUHAUS_BUILD_DIR:-$ROOT/build}"
 DEST="$BUILD/$SLUG"
-ZIP="$ROOT/$SLUG-$VERSION.zip"
+ZIP="${BAUHAUS_ZIP_PATH:-$ROOT/$SLUG-$VERSION.zip}"
 
 rm -rf "$BUILD"
 mkdir -p "$DEST"

@@ -45,7 +45,7 @@ class PluginBootstrapTest extends TestCase {
 	public function test_bootstrap_does_not_register_a_manual_textdomain_loader(): void {
 		Functions\expect( 'add_action' )
 			->once()
-			->with( 'plugins_loaded', \Mockery::type( 'callable' ) )
+			->with( 'plugins_loaded', 'bauhaus_accessibility_init' )
 			->andReturn( true );
 
 		Functions\expect( 'load_plugin_textdomain' )->never();

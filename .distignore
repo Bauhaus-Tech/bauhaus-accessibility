@@ -6,12 +6,16 @@
 /.gitignore
 /.distignore
 /.wordpress-org
+/.*/
 /README.md
+/MANUAL_TESTS.md
 /AGENTS.md
 /PLAN.md
+/translations.md
 /bin
 /build
 /docs
+/team
 /tests
 /vendor
 /composer.json
