@@ -70,3 +70,29 @@
   metadata paths.
 - Regression: `composer test` passed with 36 tests and 75 assertions after
   the review fixes.
+
+### Browser verification
+
+- The local WordPress site at `http://centrodememoria.local` was checked in a
+  1280×720 Chromium session using a disposable administrator account. The
+  workspace plugin was made available through a temporary symlink, activated
+  for the check, and then deactivated again.
+- A compiled `bauhaus-accessibility-pt_BR.mo` was temporarily placed in
+  WordPress's `wp-content/languages/plugins/` directory. With the site language
+  set to Brazilian Portuguese, the Settings → Accessibility screen displayed:
+  `Acessibilidade`, `Configurações do widget`, `Ativar intérprete de língua de
+  sinais VLibras`, `Ativar widget de acessibilidade`, `Posição do widget`,
+  `Direita`, and `Esquerda`.
+- Keyboard navigation from the settings screen focused WordPress's visible
+  “Pular para o conteúdo principal” link. The captured screen was visually
+  inspected during the run. The temporary language pack and temporary plugin
+  symlink were removed after verification; the site language was already
+  `pt_BR` and was left unchanged.
+
+### Final verification
+
+- `composer test` passed with 37 tests and 79 assertions.
+- `composer lint` completed successfully with no output.
+- `composer analyse` completed with 0 errors.
+- `msgfmt --check` accepted the Brazilian Portuguese source PO, and
+  `bin/build-zip.sh` produced the installable ZIP successfully.
