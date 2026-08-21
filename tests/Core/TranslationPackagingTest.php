@@ -44,6 +44,10 @@ class TranslationPackagingTest extends TestCase {
 			"msgid \"Accessibility\"\nmsgstr \"Acessibilidade\"",
 			$translation_contents
 		);
+		$this->assertSame(
+			array( 'docs/translations/bauhaus-accessibility-pt_BR.po' ),
+			$this->translation_artifact_paths( $plugin_root )
+		);
 	}
 
 	/**
@@ -92,9 +96,80 @@ class TranslationPackagingTest extends TestCase {
 			$this->assertNotContains( 'bauhaus-accessibility/MANUAL_TESTS.md', $entries );
 			$this->assertFalse( $this->archive_contains_path( $entries, 'bauhaus-accessibility/team/' ) );
 			$this->assertFalse( $this->archive_contains_hidden_root_entry( $entries ) );
+			$this->assertSame( array(), $this->archive_translation_artifact_paths( $entries ) );
 		} finally {
 			$this->remove_directory( $test_directory );
 		}
+	}
+
+	/**
+	 * Lists translation artifacts committed to the plugin repository.
+	 *
+	 * @param string $plugin_root Absolute repository path.
+	 * @return array<int, string> Paths relative to the repository root.
+	 */
+	private function translation_artifact_paths( string $plugin_root ): array {
+		$artifacts = array();
+		$entries   = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator( $plugin_root, FilesystemIterator::SKIP_DOTS )
+		);
+
+		foreach ( $entries as $entry ) {
+			if ( ! $entry->isFile() ) {
+				continue;
+			}
+
+			$relative_path = ltrim( substr( $entry->getPathname(), strlen( $plugin_root ) ), DIRECTORY_SEPARATOR );
+			if ( $this->is_ignored_repository_path( $relative_path ) || ! $this->is_translation_artifact( $relative_path ) ) {
+				continue;
+			}
+
+			$artifacts[] = str_replace( DIRECTORY_SEPARATOR, '/', $relative_path );
+		}
+
+		sort( $artifacts );
+
+		return $artifacts;
+	}
+
+	/**
+	 * Lists translation artifacts included in an installable archive.
+	 *
+	 * @param array<int, string|false> $entries ZIP entry names.
+	 * @return array<int, string>
+	 */
+	private function archive_translation_artifact_paths( array $entries ): array {
+		$artifacts = array();
+
+		foreach ( $entries as $entry ) {
+			if ( is_string( $entry ) && $this->is_translation_artifact( $entry ) ) {
+				$artifacts[] = $entry;
+			}
+		}
+
+		sort( $artifacts );
+
+		return $artifacts;
+	}
+
+	/**
+	 * Identifies repository paths owned by development tooling.
+	 *
+	 * @param string $relative_path Repository-relative path.
+	 * @return bool
+	 */
+	private function is_ignored_repository_path( string $relative_path ): bool {
+		return str_starts_with( $relative_path, '.git/' ) || str_starts_with( $relative_path, 'vendor/' );
+	}
+
+	/**
+	 * Checks whether a path names a WordPress translation artifact.
+	 *
+	 * @param string $path Repository- or archive-relative path.
+	 * @return bool
+	 */
+	private function is_translation_artifact( string $path ): bool {
+		return 1 === preg_match( '/(?:\\.(?:po|pot|mo)|\\.l10n\\.php)$/i', $path );
 	}
 
 	/**

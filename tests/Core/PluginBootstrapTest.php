@@ -54,4 +54,22 @@ class PluginBootstrapTest extends TestCase {
 
 		$this->assertFalse( function_exists( 'bauhaus_accessibility_load_textdomain' ) );
 	}
+
+	/**
+	 * Plugin metadata declares the domain WordPress.org uses for language packs.
+	 *
+	 * @return void
+	 */
+	public function test_plugin_header_declares_the_wordpress_org_translation_domain(): void {
+		$plugin_file = dirname( __DIR__, 2 ) . '/bauhaus-accessibility.php';
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads the repository-local plugin header.
+		$plugin_contents = file_get_contents( $plugin_file );
+
+		$this->assertNotFalse( $plugin_contents );
+		$this->assertMatchesRegularExpression(
+			'/^ \* Text Domain:\s+bauhaus-accessibility$/m',
+			$plugin_contents
+		);
+	}
 }

@@ -44,6 +44,18 @@
   exclusion rule. For its sensitivity probe, that rule was temporarily removed
   from a saved copy of `.distignore`; the archive test failed with 1 failure.
   Restoring the saved file returned the packaging test to green.
+- The plugin-header test initially passed because the existing header correctly
+  declared `bauhaus-accessibility`. Its sensitivity probe temporarily changed
+  the header to `temporary-domain`; `vendor/bin/phpunit
+  tests/Core/PluginBootstrapTest.php` then failed with 1 failure at the header
+  assertion. Restoring the header returned the test to green with 2 tests and
+  3 assertions.
+- The translation-artifact enumeration test initially passed because the only
+  repository translation artifact was the Brazilian Portuguese source PO. Its
+  sensitivity probe temporarily added `tests/Core/unexpected-translation.po`;
+  `vendor/bin/phpunit tests/Core/TranslationPackagingTest.php` then failed with
+  1 failure showing that extra path. Removing the probe returned the test to
+  green with 2 tests and 20 assertions.
 
 ### Quality-gate evidence
 
