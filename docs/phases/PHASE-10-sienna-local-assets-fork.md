@@ -49,3 +49,12 @@ sites to run the toolbar without third-party asset requests.
   phase.
 - Upstream build dependencies may need security maintenance in a later phase;
   this phase changes only what local asset delivery requires.
+
+## Amendment 1
+
+The upstream 2.0.1 source bundles its locale JSON modules directly into the
+UMD rather than requesting locale files at runtime. The owner approved keeping
+that single local representation: R2 and A2 therefore require bundled locale
+data with no external locale URL, while the readable-font files are copied into
+the distributable output as local files. Emitting separate locale files is out
+of scope because it would duplicate the source of truth without a runtime need.
