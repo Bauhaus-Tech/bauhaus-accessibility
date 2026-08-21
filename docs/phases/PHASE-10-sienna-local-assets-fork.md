@@ -58,3 +58,10 @@ that single local representation: R2 and A2 therefore require bundled locale
 data with no external locale URL, while the readable-font files are copied into
 the distributable output as local files. Emitting separate locale files is out
 of scope because it would duplicate the source of truth without a runtime need.
+
+## Tooling-only files
+
+The fork's `package.json`, generated `package-lock.json`, and
+`esbuild.config.js` are configuration for dependency resolution and asset
+generation. They carry no independently observable product behavior; the
+browser bundle and copied assets they generate are covered by R3's build test.
