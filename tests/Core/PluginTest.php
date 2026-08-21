@@ -135,10 +135,10 @@ class PluginTest extends TestCase {
 	}
 
 	/**
-	 * run() must no longer call load_plugin_textdomain.
+	 * The core plugin class must not load translations itself.
 	 *
-	 * Textdomain loading was moved to the main plugin file so it can use
-	 * plugin_basename() to compute a correct relative path on 'init'.
+	 * The bootstrap test verifies that WordPress.org language packs own
+	 * translation loading for the full plugin runtime.
 	 */
 	public function test_run_does_not_load_textdomain(): void {
 		Functions\expect( 'load_plugin_textdomain' )

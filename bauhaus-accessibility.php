@@ -11,7 +11,6 @@
  * License:           GPL-3.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       bauhaus-accessibility
- * Domain Path:       /languages
  *
  * @package Bauhaus_Accessibility
  */
@@ -54,24 +53,6 @@ spl_autoload_register(
 		}
 	}
 );
-
-/**
- * Load plugin textdomain for bundled translations.
- *
- * Must run before the init hook registers translatable strings.
- * Uses plugin_basename() so the path stays correct even if the
- * plugin folder is renamed.
- *
- * @return void
- */
-function bauhaus_accessibility_load_textdomain(): void {
-	load_plugin_textdomain(
-		'bauhaus-accessibility',
-		false,
-		dirname( plugin_basename( __FILE__ ) ) . '/languages'
-	);
-}
-add_action( 'init', 'bauhaus_accessibility_load_textdomain' );
 
 /**
  * Boot the plugin.

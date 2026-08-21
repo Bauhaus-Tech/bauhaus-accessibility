@@ -17,6 +17,17 @@ of the VLibras JavaScript. If that government service is unavailable, the
 VLibras button cannot load, while the rest of the site and the Sienna widget
 remain available.
 
+## WordPress interface translations
+
+The plugin's WordPress interface uses the `bauhaus-accessibility` text domain.
+WordPress downloads approved interface translations as language packs from
+WordPress.org when they are available for the site's language. The plugin does
+not ship its own WordPress translation files.
+
+The Brazilian Portuguese source translation and contribution instructions are
+maintained in this repository for translation contributors; they are not part
+of the plugin's WordPress.org distribution.
+
 ## Requirements
 
 - WordPress 6.0+

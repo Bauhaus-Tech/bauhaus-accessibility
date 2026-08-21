@@ -21,12 +21,10 @@ Both widgets appear as stacked buttons on the side of the page. You choose left 
 
 == Languages ==
 
-This plugin is available in:
-
-* English (default)
-* Portuguese (Brazil) — `pt_BR`
-
-Translations are loaded automatically based on your site's language setting.
+The plugin's WordPress interface is written in English by default. Approved
+translations are delivered as WordPress.org language packs according to the
+site language setting; the plugin does not include its own WordPress
+translation files.
 
 == Installation ==
 
