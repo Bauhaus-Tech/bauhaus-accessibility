@@ -1,0 +1,63 @@
+# Brazilian Portuguese translation of Bauhaus Accessibility.
+# This source file is maintained in Git and contributed through WordPress.org.
+msgid ""
+msgstr ""
+"Project-Id-Version: Bauhaus Accessibility 1.0.0\n"
+"PO-Revision-Date: 2026-08-21 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: bauhaus-accessibility\n"
+
+#. Plugin Name of the plugin
+#: bauhaus-accessibility.php:3
+msgid "Bauhaus Accessibility"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: bauhaus-accessibility.php:10
+msgid "https://bauhaustech.com/"
+msgstr ""
+
+#. Description of the plugin
+#: bauhaus-accessibility.php:4
+msgid "Adds the VLibras sign language widget and the Sienna accessibility toolbar to your WordPress site."
+msgstr "Adiciona o widget de língua de sinais VLibras e a barra de acessibilidade Sienna ao seu site WordPress."
+
+#. Author of the plugin
+#: bauhaus-accessibility.php:9
+msgid "Bauhaus Tech"
+msgstr ""
+
+#: includes/Core/Plugin.php:59
+msgid "Accessibility"
+msgstr "Acessibilidade"
+
+#: includes/Core/Plugin.php:91
+msgid "Widget Settings"
+msgstr "Configurações do widget"
+
+#: includes/Core/Plugin.php:98
+msgid "Enable VLibras Sign Language Interpreter"
+msgstr "Ativar intérprete de língua de sinais VLibras"
+
+#: includes/Core/Plugin.php:106
+msgid "Enable Accessibility Widget"
+msgstr "Ativar widget de acessibilidade"
+
+#: includes/Core/Plugin.php:114
+msgid "Widget Position"
+msgstr "Posição do widget"
+
+#: includes/Core/Plugin.php:215
+msgid "Right"
+msgstr "Direita"
+
+#: includes/Core/Plugin.php:225
+msgid "Left"
+msgstr "Esquerda"

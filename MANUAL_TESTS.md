@@ -9,3 +9,13 @@
 **Expected result:** The VLibras button is visible on the selected side and opens the Libras interpretation interface.
 
 **Failure modes to try:** Disable the VLibras interpreter and reload the public page; the VLibras button must no longer appear. If the government VLibras service cannot be reached, the interpreter cannot open; the page and the Sienna widget, if enabled, remain usable.
+
+## MT-02 — WordPress.org Brazilian Portuguese language pack
+
+**Preconditions:** An approved Brazilian Portuguese language pack is available for the published plugin version, and the site language is set to Portuguese (Brazil).
+
+**Steps:** 1. In the WordPress administration updates screen, install available translations. 2. Open Settings → Accessibility. 3. Review the settings page labels and the Accessibility menu label.
+
+**Expected result:** The plugin interface is shown in Brazilian Portuguese from the WordPress.org language pack. No translation file exists in the installed plugin's `languages` directory.
+
+**Failure modes to try:** Use a site language with no approved plugin language pack and reload the settings page; the interface falls back to English while the plugin remains usable.
