@@ -24,3 +24,12 @@
   requests were the fixture, the UMD, and the local WOFF font.
 - Detailed durable receipt: the fork's
   `docs/verification/phase-10-local-assets.md`.
+
+## Review follow-up
+
+- Fork commit `da6af85` adds a committed Playwright browser test. `npm test`
+  passed with 2 tests and 0 failures in the unrestricted environment required
+  for the loopback fixture server.
+- The full upstream lint command still has five pre-existing errors and four
+  warnings in untouched files. The owner approved a separate maintenance phase
+  to address them.
