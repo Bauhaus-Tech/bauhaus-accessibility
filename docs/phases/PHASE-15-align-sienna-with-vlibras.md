@@ -45,3 +45,6 @@ runtime writes a 10px horizontal offset as an inline style.
 - Browser verification: `centrodememoria.local` exposed `WordPress 7.1` and,
   with Sienna's inline offset set to 10px, computed `left: 20px` in left mode
   and computed `right: 20px` in right mode.
+- Owner disposition: the owner manually validated the alignment, explicitly
+  approved this phase outcome, and authorized the push without further testing
+  or review.
