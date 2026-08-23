@@ -45,19 +45,22 @@ class SiennaWidgetTest extends TestCase {
 	}
 
 	/**
-	 * When enable_sienna is true, the widget must register and enqueue assets.
+	 * When enabled, the widget must enqueue the packaged local fork bundle.
 	 */
-	public function test_enabled_widget_enqueues_assets(): void {
+	public function test_enabled_widget_enqueues_the_local_fork_bundle(): void {
 		$enqueued = array();
 
-		Functions\expect( 'wp_register_script' )
-			->once()
-			->with( 'sienna-accessibility', false, \Mockery::any(), '2.2.333', true )
-			->andReturn( true );
+		Functions\expect( 'wp_register_script' )->never();
 
 		Functions\expect( 'wp_enqueue_script' )
 			->once()
-			->with( 'sienna-accessibility' )
+			->with(
+				'sienna-accessibility',
+				'https://example.com/wp-content/plugins/bauhaus-accessibility/assets/js/sienna-accessibility.umd.js',
+				array(),
+				'2.0.1',
+				true
+			)
 			->andReturnUsing(
 				function ( string $handle ) use ( &$enqueued ) {
 					$enqueued[ $handle ] = true;
@@ -68,11 +71,7 @@ class SiennaWidgetTest extends TestCase {
 			->once()
 			->andReturn( true );
 
-		Functions\expect( 'wp_add_inline_script' )
-			->zeroOrMoreTimes()
-			->andReturn( true );
-
-		// Let file_exists/file_get_contents work — the UMD bundle is present.
+		Functions\expect( 'wp_add_inline_script' )->once()->andReturn( true );
 
 		$options = array(
 			'enable_sienna'   => true,
@@ -105,9 +104,7 @@ class SiennaWidgetTest extends TestCase {
 	public function test_widget_injects_config_before_script(): void {
 		$before_script = null;
 
-		Functions\expect( 'wp_register_script' )
-			->once()
-			->andReturn( true );
+		Functions\expect( 'wp_register_script' )->never();
 
 		Functions\expect( 'wp_enqueue_script' )
 			->once()
@@ -118,7 +115,7 @@ class SiennaWidgetTest extends TestCase {
 			->andReturn( true );
 
 		Functions\expect( 'wp_add_inline_script' )
-			->zeroOrMoreTimes()
+			->once()
 			->andReturnUsing(
 				function ( string $handle, string $script, string $position = 'after' ) use ( &$before_script ) {
 					if ( 'before' === $position ) {
@@ -136,7 +133,9 @@ class SiennaWidgetTest extends TestCase {
 		$widget->maybe_enqueue( $options );
 
 		$this->assertNotNull( $before_script, 'No before-script was injected' );
-		$this->assertStringContainsString( 'data-position', $before_script );
+		$this->assertStringContainsString( 'data-asw-position', $before_script );
+		$this->assertStringContainsString( 'data-asw-lang', $before_script );
+		$this->assertStringContainsString( 'data-asw-offset', $before_script );
 		$this->assertStringContainsString( 'center-left', $before_script );
 	}
 
@@ -146,12 +145,12 @@ class SiennaWidgetTest extends TestCase {
 	public function test_init_script_uses_center_right(): void {
 		$before_script = null;
 
-		Functions\expect( 'wp_register_script' )->once()->andReturn( true );
+		Functions\expect( 'wp_register_script' )->never();
 		Functions\expect( 'wp_enqueue_script' )->once()->andReturn( true );
 		Functions\expect( 'wp_enqueue_style' )->once()->andReturn( true );
 
 		Functions\expect( 'wp_add_inline_script' )
-			->zeroOrMoreTimes()
+			->once()
 			->andReturnUsing(
 				function ( string $handle, string $script, string $position = 'after' ) use ( &$before_script ) {
 					if ( 'before' === $position ) {
@@ -178,12 +177,12 @@ class SiennaWidgetTest extends TestCase {
 	public function test_registers_body_class_filter(): void {
 		$filter_callback = null;
 
-		Functions\expect( 'wp_register_script' )->once()->andReturn( true );
+		Functions\expect( 'wp_register_script' )->never();
 		Functions\expect( 'wp_enqueue_script' )->once()->andReturn( true );
 		Functions\expect( 'wp_enqueue_style' )->once()->andReturn( true );
 
 		Functions\expect( 'wp_add_inline_script' )
-			->zeroOrMoreTimes()
+			->once()
 			->andReturn( true );
 
 		Functions\expect( 'add_filter' )

@@ -17,6 +17,18 @@ of the VLibras JavaScript. If that government service is unavailable, the
 VLibras button cannot load, while the rest of the site and the Sienna widget
 remain available.
 
+## Sienna accessibility toolbar
+
+When an administrator enables Sienna in Settings → Accessibility, visitors see
+a compact toolbar button on the configured side of each public page. Its
+contrast, font-size, readable-font, and other toolbar controls run entirely
+from the plugin's packaged JavaScript and font files. Sienna does not make
+runtime requests to a third-party service; the toolbar remains available when
+external services are unreachable.
+
+The editable source and reproducible build instructions are maintained in the
+[Bauhaus Sienna source repository](https://github.com/Bauhaus-Tech/Sienna-Accessibility-Widget).
+
 ## WordPress interface translations
 
 The plugin's WordPress interface uses the `bauhaus-accessibility` text domain.
@@ -42,6 +54,11 @@ vendor/bin/phpunit      # Run tests
 vendor/bin/phpcs        # Lint PHP
 vendor/bin/phpstan analyse  # Static analysis
 ```
+
+To rebuild the packaged Sienna runtime, use the public source repository above
+at the revision recorded in the relevant phase evidence, run `npm ci` and
+`npm run build`, then copy its UMD and `dist/fonts/` files into the matching
+`assets/js/` paths in this plugin.
 
 ## License
 

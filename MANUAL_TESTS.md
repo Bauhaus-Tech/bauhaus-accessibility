@@ -19,3 +19,13 @@
 **Expected result:** The plugin interface is shown in Brazilian Portuguese from the WordPress.org language pack. No translation file exists in the installed plugin's `languages` directory.
 
 **Failure modes to try:** Use a site language with no approved plugin language pack and reload the settings page; the interface falls back to English while the plugin remains usable.
+
+## MT-03 — Local Sienna accessibility toolbar
+
+**Preconditions:** An administrator has enabled the Sienna accessibility toolbar in Settings → Accessibility and selected either the left or right widget position.
+
+**Steps:** 1. Open a public page of the site. 2. Find the blue accessibility button on the selected side. 3. Select the button. 4. Use the high-contrast and readable-font controls.
+
+**Expected result:** The compact button opens the toolbar, both controls change the current page, and the readable font is applied without relying on an external Sienna service.
+
+**Failure modes to try:** Disable the Sienna toolbar and reload the public page; its button must no longer appear while VLibras, if enabled, remains usable.

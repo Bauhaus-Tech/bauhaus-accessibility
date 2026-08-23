@@ -50,8 +50,11 @@ Yes. All Sienna JavaScript, fonts, and translations are bundled in the plugin. N
 
 This plugin bundles the following third-party libraries:
 
-* **Sienna Accessibility Widget** (v2.2.333) — MIT License
-  JavaScript, fonts, and locale files from https://github.com/bennyluk/Sienna-Accessibility-Widget
+* **Bauhaus Sienna Accessibility Widget** (v2.0.1) — MIT License
+  JavaScript and fonts are built from https://github.com/Bauhaus-Tech/Sienna-Accessibility-Widget
+  with `npm ci` followed by `npm run build`. The public repository contains the
+  editable source and build configuration; this plugin packages the resulting
+  UMD bundle and its local font files.
 
 * **OpenDyslexic Font** (v3) — SIL Open Font License
   Dyslexia-friendly typeface bundled with Sienna.

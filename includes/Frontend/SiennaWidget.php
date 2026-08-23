@@ -2,8 +2,7 @@
 /**
  * Sienna Accessibility Widget front-end integration.
  *
- * Outputs the Sienna UMD bundle inline (with CDN asset URLs patched to local
- * paths) so no external requests are made for Sienna assets.
+ * Loads the packaged Sienna UMD bundle so its runtime assets resolve locally.
  *
  * @package Bauhaus_Accessibility\Frontend
  */
@@ -16,18 +15,11 @@ namespace Bauhaus_Accessibility\Frontend;
 class SiennaWidget {
 
 	/**
-	 * Path to the original Sienna UMD bundle, relative to plugin root.
+	 * Path to the packaged Sienna UMD bundle, relative to plugin root.
 	 *
 	 * @var string
 	 */
 	const UMD_PATH = 'assets/js/sienna-accessibility.umd.js';
-
-	/**
-	 * CDN base URL hardcoded in the Sienna 2.2.333 UMD bundle.
-	 *
-	 * @var string
-	 */
-	const CDN_BASE = 'https://cdn.jsdelivr.net/npm/sienna-accessibility/dist/';
 
 	/**
 	 * Enqueue scripts and styles if the widget is enabled.
@@ -45,16 +37,18 @@ class SiennaWidget {
 
 		$position = $options['widget_position'] ?? 'right';
 
-		// Sienna 2.x auto-initializes on load. It reads its config from
-		// data-position/data-lang attributes on any element in the DOM.
+		// Sienna 2.0.1 auto-initializes on load. It reads these attributes
+		// from the DOM before the external bundle executes.
 		// We inject a hidden element BEFORE the bundle so it picks up our config.
 		$sienna_position = 'center-' . $position; // center-right or center-left.
 		$sienna_lang     = substr( get_locale(), 0, 2 );
 
-		// Register a dummy script handle so we can attach inline JS to it.
-		// Using false as src means no external file — all JS is inline.
-		wp_register_script( 'sienna-accessibility', false, array(), '2.2.333', true );
-		wp_enqueue_script( 'sienna-accessibility' );
+		$umd_file = dirname( __DIR__, 2 ) . '/' . self::UMD_PATH;
+		$umd_url  = plugin_dir_url( $umd_file ) . basename( $umd_file );
+
+		// Load the reproducible local fork build. Its font resolver derives the
+		// sibling fonts directory from this script URL (ADR-006).
+		wp_enqueue_script( 'sienna-accessibility', $umd_url, array(), '2.0.1', true );
 
 		// Inject config element before the bundle loads.
 		// offset: [horizontal, vertical]. 45px vertical offset places
@@ -65,9 +59,9 @@ class SiennaWidget {
 				'(function(){'
 					. 'var d=document.createElement("div");'
 					. 'd.style.display="none";'
-					. 'd.setAttribute("data-position","%s");'
-					. 'd.setAttribute("data-lang","%s");'
-					. 'd.setAttribute("data-offset","10,45");'
+					. 'd.setAttribute("data-asw-position","%s");'
+					. 'd.setAttribute("data-asw-lang","%s");'
+					. 'd.setAttribute("data-asw-offset","10,45");'
 					. 'document.body.appendChild(d);'
 					. '})();',
 				esc_js( $sienna_position ),
@@ -75,68 +69,6 @@ class SiennaWidget {
 			),
 			'before'
 		);
-
-		// Read the UMD bundle and patch CDN URLs to local paths.
-		$umd_file = dirname( __DIR__, 2 ) . '/' . self::UMD_PATH;
-		if ( file_exists( $umd_file ) ) {
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- This reads a local bundled asset; an HTTP request is not appropriate.
-			$js = file_get_contents( $umd_file );
-
-			// Patch CDN asset URLs → local plugin directory.
-			$js = str_replace(
-				self::CDN_BASE,
-				plugin_dir_url( $umd_file ) . '../',
-				$js
-			);
-
-			// Patch button style to match VLibras: square, 40px, blue.
-			$js = str_replace(
-				array(
-					'--asw-btn-size: 58px',
-					'--asw-icon-size: 36px',
-					'border-radius:50%!important',
-					'border:3px solid white!important',
-					'outline:5px solid var(--asw-primary)!important',
-					',20],size:58,',
-					'primaryColor:"#0848ca"',
-					// Raise z-index above VLibras (2147483645)
-					'z-index:500000',
-					// Fix: first close-btn click was a no-op because the toggle
-					// function D() treated an unset style.display ("") like "none".
-					'T.style.display==="none"||T.style.display===""',
-				),
-				array(
-					'--asw-btn-size: 40px',
-					'--asw-icon-size: 24px',
-					'border-radius:8px!important',
-					'border:none!important',
-					'outline:none!important',
-					',20],size:40,',
-					'primaryColor:"#005eb8"',
-					'z-index:2147483646',
-					'T.style.display==="none"',
-				),
-				$js
-			);
-
-			wp_add_inline_script( 'sienna-accessibility', $js );
-
-			// Remove Sienna footer branding whenever it appears in the DOM.
-			// The footer is created dynamically when the menu opens, so we
-			// watch for it with a MutationObserver.
-			wp_add_inline_script(
-				'sienna-accessibility',
-				'(function(){'
-					. 'new MutationObserver(function(){'
-					. 'var f=document.querySelector(".asw-footer");'
-					. 'if(f){f.remove();}'
-					. 'var s=document.getElementById("asw-statement-link");'
-					. 'if(s){s.remove();}'
-					. '}).observe(document.body||document.documentElement,{childList:true,subtree:true});'
-					. '})();',
-				'after'
-			);
-		}
 
 		// Position CSS for the widget buttons (side + stacking).
 		wp_enqueue_style(

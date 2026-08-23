@@ -4,14 +4,28 @@
  * Both widgets appear as stacked square buttons on the far left or
  * right of the page, vertically centered.
  *
- * Button styling (size, shape, color) is patched directly into the
- * Sienna UMD bundle at serve-time. Footer branding is removed via JS.
- * This file handles early-loading layout rules only.
+ * The local Sienna bundle keeps its upstream styles intact. These more-specific
+ * rules preserve this plugin's compact control without modifying that bundle.
  */
 
-/* Sienna z-index stacking */
-.asw-menu-btn {
-	z-index: 500000 !important;
+/* Sienna must remain above VLibras, whose runtime uses 2147483645. */
+.asw-container .asw-menu-btn {
+	z-index: 2147483646 !important;
+	width: 40px !important;
+	height: 40px !important;
+	border: none !important;
+	border-radius: 8px !important;
+	outline: none !important;
+	background: #005eb8 !important;
+}
+
+.asw-container .asw-menu-btn svg {
+	width: 24px !important;
+	height: 24px !important;
+	min-width: 24px !important;
+	min-height: 24px !important;
+	max-width: 24px !important;
+	max-height: 24px !important;
 }
 
 /* VLibras horizontal alignment — match Sienna's 10px offset */

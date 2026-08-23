@@ -7,7 +7,7 @@ Bauhaus 2.0.1 fork build and remove all Sienna remote-asset rewriting.
 
 ## In scope
 
-1. Replace the plugin UMD and font assets from fork commit `c8111e7`.
+1. Replace the plugin UMD and font assets from fork commit `30f5f83`.
 2. Remove `CDN_BASE` and runtime bundle rewriting from `SiennaWidget`.
 3. Prove plugin distribution and browser execution make no remote Sienna asset
    requests.
