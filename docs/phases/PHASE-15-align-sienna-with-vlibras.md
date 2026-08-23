@@ -27,7 +27,7 @@ runtime writes a 10px horizontal offset as an inline style.
 |---|-----------|-------------|
 | A1 | Left-position mode contains `left: 20px !important` for Sienna's control. | `SiennaDistributionTest::test_plugin_styles_override_inline_sienna_offsets_to_align_with_vlibras` |
 | A2 | Right-position mode contains `right: 20px !important` for Sienna's control. | `SiennaDistributionTest::test_plugin_styles_override_inline_sienna_offsets_to_align_with_vlibras` |
-| A3 | A public page with both widgets on the same configured side shows aligned controls. | Recorded local browser check against `centrodememoria.local` |
+| A3 | A public page with both widgets on the same configured side shows aligned controls. | `team/WORKITEMS/W-015/local-position-proof.cjs` |
 
 ## Risks / open questions
 

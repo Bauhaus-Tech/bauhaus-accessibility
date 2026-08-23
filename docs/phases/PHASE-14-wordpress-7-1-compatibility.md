@@ -51,7 +51,8 @@ documentation declare metadata rather than runtime behavior:
 - Runtime confirmation: a read-only browser smoke test loaded
   `http://centrodememoria.local`, exposed `WordPress 7.1` in its generator
   metadata, and opened the active Sienna toolbar. The browser received the
-  plugin's local JavaScript and font assets.
+  plugin's local JavaScript and font assets. The repeatable command and its
+  observed output are retained in `team/WORKITEMS/W-015/evidence.md`.
 - Review: the independent review identified the phase-specification ordering
   issue above. This report records the agreed resolution; future phase
   specifications must be committed before their implementation begins.

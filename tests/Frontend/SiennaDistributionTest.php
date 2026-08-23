@@ -77,7 +77,13 @@ class SiennaDistributionTest extends TestCase {
 
 		$this->assertNotFalse( $left_position_styles );
 		$this->assertNotFalse( $right_position_styles );
-		$this->assertStringContainsString( 'left: 20px !important;', $left_position_styles );
-		$this->assertStringContainsString( 'right: 20px !important;', $right_position_styles );
+		$this->assertMatchesRegularExpression(
+			'/\\.asw-container\\s*\\{.*?\\.asw-widget\\s*\\{.*?\\.asw-menu-btn\\s*\\{.*?left:\\s*20px\\s*!important;/s',
+			$left_position_styles
+		);
+		$this->assertMatchesRegularExpression(
+			'/\\.asw-container\\s*\\{.*?\\.asw-widget\\s*\\{.*?\\.asw-menu-btn\\s*\\{.*?right:\\s*20px\\s*!important;/s',
+			$right_position_styles
+		);
 	}
 }
