@@ -39,3 +39,15 @@ documentation declare metadata rather than runtime behavior:
 
 - `Tested up to` records a compatibility-testing claim; it does not change the
   plugin's minimum WordPress version or enforce a runtime version check.
+
+## Phase report
+
+- Process exception: this phase specification was committed together with its
+  implementation, so Git history cannot demonstrate that the specification
+  existed before the phase began. The compatibility declaration itself is
+  covered by the permanent metadata test.
+- Verification: PHPUnit reported 42 passing tests and 101 assertions; PHPCS
+  reported no errors or warnings; PHPStan reported no errors.
+- Review: the independent review identified the phase-specification ordering
+  issue above. This report records the agreed resolution; future phase
+  specifications must be committed before their implementation begins.
