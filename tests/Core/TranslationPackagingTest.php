@@ -31,6 +31,7 @@ class TranslationPackagingTest extends TestCase {
 		$translation_source = $plugin_root . '/docs/translations/bauhaus-accessibility-pt_BR.po';
 
 		$this->assertDirectoryDoesNotExist( $plugin_root . '/languages' );
+		$this->assertDirectoryDoesNotExist( $plugin_root . '/assets/locales' );
 		$this->assertFileExists( $translation_source );
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads a repository-local PO file; no HTTP request is appropriate.
@@ -90,7 +91,8 @@ class TranslationPackagingTest extends TestCase {
 			}
 			$archive->close();
 
-			$this->assertFalse( $this->archive_contains_path( $entries, 'bauhaus-accessibility/languages/' ) );
+				$this->assertFalse( $this->archive_contains_path( $entries, 'bauhaus-accessibility/languages/' ) );
+				$this->assertFalse( $this->archive_contains_path( $entries, 'bauhaus-accessibility/assets/locales/' ) );
 			$this->assertFalse( $this->archive_contains_path( $entries, 'bauhaus-accessibility/docs/translations/' ) );
 			$this->assertNotContains( 'bauhaus-accessibility/translations.md', $entries );
 			$this->assertNotContains( 'bauhaus-accessibility/MANUAL_TESTS.md', $entries );
