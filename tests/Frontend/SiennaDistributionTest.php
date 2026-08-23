@@ -36,6 +36,19 @@ class SiennaDistributionTest extends TestCase {
 	}
 
 	/**
+	 * The local bundle keeps its own locale modules instead of requesting them.
+	 */
+	public function test_sienna_bundle_embeds_english_and_portuguese_locales_without_fetching_them(): void {
+		$plugin_root = dirname( __DIR__, 2 );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads the local packaged bundle.
+		$bundle = file_get_contents( $plugin_root . '/assets/js/sienna-accessibility.umd.js' );
+
+		$this->assertStringContainsString( '../locales/en.json', $bundle );
+		$this->assertStringContainsString( '../locales/pt.json', $bundle );
+		$this->assertStringNotContainsString( 'fetch(', $bundle );
+	}
+
+	/**
 	 * The local bundle must remain a compact control above the VLibras button.
 	 */
 	public function test_plugin_styles_keep_the_sienna_control_above_vlibras(): void {
