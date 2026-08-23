@@ -48,6 +48,10 @@ documentation declare metadata rather than runtime behavior:
   covered by the permanent metadata test.
 - Verification: PHPUnit reported 42 passing tests and 101 assertions; PHPCS
   reported no errors or warnings; PHPStan reported no errors.
+- Runtime confirmation: a read-only browser smoke test loaded
+  `http://centrodememoria.local`, exposed `WordPress 7.1` in its generator
+  metadata, and opened the active Sienna toolbar. The browser received the
+  plugin's local JavaScript and font assets.
 - Review: the independent review identified the phase-specification ordering
   issue above. This report records the agreed resolution; future phase
   specifications must be committed before their implementation begins.
