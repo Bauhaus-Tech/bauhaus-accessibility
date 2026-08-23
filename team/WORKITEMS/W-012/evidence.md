@@ -54,3 +54,31 @@ Runtime file SHA-256 values:
   Sienna-related requests were the local UMD and local WOFF font:
   `wp-content/plugins/bauhaus-accessibility/assets/js/sienna-accessibility.umd.js?ver=2.0.1`
   and `wp-content/plugins/bauhaus-accessibility/assets/js/fonts/OpenDyslexic3-Regular.woff`.
+
+## Coverage-gap and repeatable browser proof
+
+The UMD-relative-font assertions were added after the asset integration as a
+coverage improvement. They first passed with **3 tests; 9 assertions**. A
+temporary local mutation changed `fonts/OpenDyslexic3-Regular.woff` to
+`fonts/Missing-Regular.woff`; the distribution suite then failed exactly that
+new assertion (**1 failure**). The byte-identical UMD was restored and the
+same suite passed again (**3 tests; 9 assertions**).
+
+The retained local browser proof is
+`team/WORKITEMS/W-012/local-browser-proof.cjs`. It requires a local WordPress
+site with this plugin active and Sienna enabled, plus the browser dependency
+from the public Sienna source checkout. The recorded request receipt is
+`team/WORKITEMS/W-012/browser-network.json`.
+
+The command used was:
+
+```sh
+BAUHAUS_LOCAL_SITE_ORIGIN=http://centrodememoria.local \
+BAUHAUS_LOCAL_SITE_IP=172.20.207.188 \
+NODE_PATH=/tmp/bauhaus-sienna-source/node_modules \
+node team/WORKITEMS/W-012/local-browser-proof.cjs
+```
+
+It ran with Playwright 1.55.0 and verified the toolbar is focusable and opens
+with the Enter key, high contrast changes the page, readable font loads, and
+every captured Sienna request has the local site origin.

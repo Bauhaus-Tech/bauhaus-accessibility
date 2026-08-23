@@ -1,0 +1,10 @@
+{
+  "runner": "Playwright 1.55.0",
+  "origin": "http://centrodememoria.local",
+  "toolbar": "opened-by-keyboard",
+  "highContrast": true,
+  "siennaRequests": [
+    "http://centrodememoria.local/wp-content/plugins/bauhaus-accessibility/assets/js/sienna-accessibility.umd.js?ver=2.0.1",
+    "http://centrodememoria.local/wp-content/plugins/bauhaus-accessibility/assets/js/fonts/OpenDyslexic3-Regular.woff"
+  ]
+}

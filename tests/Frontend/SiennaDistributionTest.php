@@ -21,6 +21,8 @@ class SiennaDistributionTest extends TestCase {
 
 		$this->assertStringNotContainsString( 'cdn.jsdelivr.net/npm/sienna-accessibility', $php );
 		$this->assertStringNotContainsString( 'cdn.jsdelivr.net/npm/sienna-accessibility', $bundle );
+		$this->assertStringContainsString( 'fonts/OpenDyslexic3-Regular.woff', $bundle );
+		$this->assertStringContainsString( 'fonts/OpenDyslexic3-Regular.ttf', $bundle );
 	}
 
 	/**
