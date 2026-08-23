@@ -65,3 +65,9 @@ The fork's `package.json`, generated `package-lock.json`, and
 `esbuild.config.js` are configuration for dependency resolution and asset
 generation. They carry no independently observable product behavior; the
 browser bundle and copied assets they generate are covered by R3's build test.
+
+## Closure exception
+
+The owner approved closing this phase without a final independent review of
+fork commit `0b52eef`. The prior review findings were addressed, but that final
+verification remains unperformed.
