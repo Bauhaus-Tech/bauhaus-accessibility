@@ -60,4 +60,24 @@ class SiennaDistributionTest extends TestCase {
 		$this->assertStringContainsString( 'width: 40px !important', $css );
 		$this->assertStringContainsString( 'height: 40px !important', $css );
 	}
+
+	/**
+	 * Plugin positioning overrides Sienna's inline 10px offsets on either side.
+	 *
+	 * @return void
+	 */
+	public function test_plugin_styles_override_inline_sienna_offsets_to_align_with_vlibras(): void {
+		$plugin_root = dirname( __DIR__, 2 );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads a local plugin stylesheet.
+		$css = file_get_contents( $plugin_root . '/assets/css/bauhaus-accessibility.css' );
+
+		$this->assertNotFalse( $css );
+		$left_position_styles  = strstr( $css, '.bauhaus-widgets-left' );
+		$right_position_styles = strstr( $css, '.bauhaus-widgets-right' );
+
+		$this->assertNotFalse( $left_position_styles );
+		$this->assertNotFalse( $right_position_styles );
+		$this->assertStringContainsString( 'left: 20px !important;', $left_position_styles );
+		$this->assertStringContainsString( 'right: 20px !important;', $right_position_styles );
+	}
 }

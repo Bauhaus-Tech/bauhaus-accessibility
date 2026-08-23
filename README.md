@@ -26,6 +26,9 @@ from the plugin's packaged JavaScript and font files. Sienna does not make
 runtime requests to a third-party service; the toolbar remains available when
 external services are unreachable.
 
+When both widgets use the same side, the Sienna button is positioned 20 pixels
+from that edge so it aligns with the VLibras control.
+
 The editable source and reproducible build instructions are maintained in the
 [Bauhaus Sienna source repository](https://github.com/Bauhaus-Tech/Sienna-Accessibility-Widget).
 

@@ -26,6 +26,6 @@
 
 **Steps:** 1. Open a public page of the site. 2. Find the blue accessibility button on the selected side. 3. Select the button. 4. Use the high-contrast and readable-font controls.
 
-**Expected result:** The compact button opens the toolbar, both controls change the current page, and the readable font is applied without relying on an external Sienna service.
+**Expected result:** The compact button aligns with the VLibras control when both use the same side, opens the toolbar, both controls change the current page, and the readable font is applied without relying on an external Sienna service.
 
 **Failure modes to try:** Disable the Sienna toolbar and reload the public page; its button must no longer appear while VLibras, if enabled, remains usable.

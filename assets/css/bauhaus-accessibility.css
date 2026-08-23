@@ -28,7 +28,7 @@
 	max-height: 24px !important;
 }
 
-/* VLibras horizontal alignment — match Sienna's 10px offset */
+/* Account for the widgets' different outer shells to align their controls. */
 .bauhaus-widgets-left {
 	div[vw] {
 		left: 10px !important;
@@ -38,7 +38,7 @@
 	.asw-container {
 		.asw-widget {
 			.asw-menu-btn {
-				left: 20px;
+				left: 20px !important;
 			}
 		}
 	}
@@ -53,7 +53,7 @@
 	.asw-container {
 		.asw-widget {
 			.asw-menu-btn {
-				right: 20px;
+				right: 20px !important;
 			}
 		}
 	}
