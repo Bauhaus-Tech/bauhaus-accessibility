@@ -72,4 +72,38 @@ class PluginBootstrapTest extends TestCase {
 			$plugin_contents
 		);
 	}
+
+	/**
+	 * Distribution metadata records the WordPress version validated for this release.
+	 *
+	 * @return void
+	 */
+	public function test_distribution_metadata_declares_wordpress_7_1_as_tested(): void {
+		$plugin_file         = dirname( __DIR__, 2 ) . '/bauhaus-accessibility.php';
+		$readme_file         = dirname( __DIR__, 2 ) . '/readme.txt';
+		$project_readme_file = dirname( __DIR__, 2 ) . '/README.md';
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads repository-local distribution metadata.
+		$plugin_contents = file_get_contents( $plugin_file );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads repository-local distribution metadata.
+		$readme_contents = file_get_contents( $readme_file );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads repository-local compatibility documentation.
+		$project_readme_contents = file_get_contents( $project_readme_file );
+
+		$this->assertNotFalse( $plugin_contents );
+		$this->assertNotFalse( $readme_contents );
+		$this->assertNotFalse( $project_readme_contents );
+		$this->assertMatchesRegularExpression(
+			'/^ \\* Tested up to:\\s+7\\.1$/m',
+			$plugin_contents
+		);
+		$this->assertMatchesRegularExpression(
+			'/^Tested up to: 7\\.1$/m',
+			$readme_contents
+		);
+		$this->assertStringContainsString(
+			'WordPress 6.0+ (tested through WordPress 7.1)',
+			$project_readme_contents
+		);
+	}
 }

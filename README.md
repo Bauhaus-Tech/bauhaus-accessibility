@@ -43,7 +43,7 @@ distribution.
 
 ## Requirements
 
-- WordPress 6.0+
+- WordPress 6.0+ (tested through WordPress 7.1)
 - PHP 8.2+
 
 ## Development
