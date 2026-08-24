@@ -18,19 +18,27 @@ class VlibrasWidget {
 	/**
 	 * Official VLibras widget script URL.
 	 *
-	 * The plugin intentionally does not distribute this third-party script: the
-	 * government service remains its authoritative source.
+	 * The plugin intentionally does not distribute this third-party script.
+	 * The bootstrap loader still comes from the government service.
 	 *
 	 * @var string
 	 */
 	const WIDGET_SCRIPT_URL = 'https://vlibras.gov.br/app/vlibras-plugin.js';
 
 	/**
-	 * Default rootPath for VLibras assets (chunks, avatars).
+	 * Root path for VLibras assets (player app, Unity files, avatars).
+	 *
+	 * Points at the same official deployment mirrored on jsDelivr instead of
+	 * vlibras.gov.br itself: the origin intermittently returns 503s, and its
+	 * 302 redirects into cdn.jsdelivr.net fail CORS revalidation once assets
+	 * are cached (the preflight omits Access-Control-Allow-Headers, so
+	 * If-None-Match is rejected). Serving the player from the mirror keeps
+	 * the iframe same-origin and bypasses both problems. Pinned to the exact
+	 * version the service serves today; bump it when upstream moves.
 	 *
 	 * @var string
 	 */
-	const DEFAULT_ROOT_PATH = 'https://vlibras.gov.br/app';
+	const DEFAULT_ROOT_PATH = 'https://cdn.jsdelivr.net/gh/spbgovbr-vlibras/vlibras-portal@v7.5.0/app';
 
 	/**
 	 * Enqueue scripts and inject footer markup if the widget is enabled.

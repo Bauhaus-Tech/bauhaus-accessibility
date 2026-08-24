@@ -106,7 +106,7 @@ class VlibrasWidgetTest extends TestCase {
 	 * The widget compares the position against lowercase 'l', so the side must
 	 * be emitted in lower case.
 	 */
-	public function test_init_script_preserves_configured_position_with_government_root_path(): void {
+	public function test_init_script_passes_positional_args_with_the_jsdelivr_mirror_root_path(): void {
 		$inline_script = null;
 
 		Functions\expect( 'wp_enqueue_script' )
@@ -120,7 +120,7 @@ class VlibrasWidgetTest extends TestCase {
 				\Mockery::on(
 					function ( string $script ) use ( &$inline_script ) {
 						$inline_script = $script;
-						return 'window.VLibras.Widget("https://vlibras.gov.br/app",undefined,undefined,"l");' === $script;
+						return 'window.VLibras.Widget("https://cdn.jsdelivr.net/gh/spbgovbr-vlibras/vlibras-portal@v7.5.0/app",undefined,undefined,"l");' === $script;
 					}
 				)
 			)
@@ -139,7 +139,7 @@ class VlibrasWidgetTest extends TestCase {
 	/**
 	 * The init script must keep the right-side position when it is configured.
 	 */
-	public function test_init_script_preserves_right_position_with_government_root_path(): void {
+	public function test_init_script_keeps_right_position_with_the_jsdelivr_mirror_root_path(): void {
 		$inline_script = null;
 
 		Functions\expect( 'wp_enqueue_script' )
@@ -153,7 +153,7 @@ class VlibrasWidgetTest extends TestCase {
 				\Mockery::on(
 					function ( string $script ) use ( &$inline_script ) {
 						$inline_script = $script;
-						return 'window.VLibras.Widget("https://vlibras.gov.br/app",undefined,undefined,"r");' === $script;
+						return 'window.VLibras.Widget("https://cdn.jsdelivr.net/gh/spbgovbr-vlibras/vlibras-portal@v7.5.0/app",undefined,undefined,"r");' === $script;
 					}
 				)
 			)

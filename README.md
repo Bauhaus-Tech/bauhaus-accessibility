@@ -11,11 +11,12 @@ When an administrator enables VLibras in Settings → Bauhaus Accessibility, vis
 the government VLibras interpreter button on the configured left or right side
 of each public page. Selecting it opens the Libras interpretation interface.
 
-The plugin loads the official widget script and its runtime assets directly from
-`https://vlibras.gov.br` when the widget is enabled; it does not include a copy
-of the VLibras JavaScript. If that government service is unavailable, the
-VLibras button cannot load, while the rest of the site and the Sienna widget
-remain available.
+The plugin loads the official bootstrap script from `https://vlibras.gov.br`; the
+player itself (app, Unity files, avatars) is loaded from the same deployment
+mirrored at `cdn.jsdelivr.net` (pinned to `vlibras-portal@v7.5.0`). The plugin
+does not include a copy of the VLibras JavaScript. If both the government service
+and the mirror are unreachable, the VLibras button cannot load, while the rest of
+the site and the Sienna widget remain available.
 
 ## Sienna accessibility toolbar
 
