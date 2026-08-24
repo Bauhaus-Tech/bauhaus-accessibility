@@ -28,17 +28,17 @@ class VlibrasWidget {
 	/**
 	 * Root path for VLibras assets (player app, Unity files, avatars).
 	 *
-	 * Points at the same official deployment mirrored on jsDelivr instead of
-	 * vlibras.gov.br itself: the origin intermittently returns 503s, and its
-	 * 302 redirects into cdn.jsdelivr.net fail CORS revalidation once assets
-	 * are cached (the preflight omits Access-Control-Allow-Headers, so
-	 * If-None-Match is rejected). Serving the player from the mirror keeps
-	 * the iframe same-origin and bypasses both problems. Pinned to the exact
-	 * version the service serves today; bump it when upstream moves.
+	 * Must stay on the government origin: the jsDelivr mirror of the same
+	 * deployment serves HTML as text/plain with x-content-type-options:
+	 * nosniff, so the player iframe never boots there (verified with a
+	 * headless browser — silent failure, no console errors). The gov.br
+	 * origin has its own defects (intermittent 503s; warm-cache CORS
+	 * failures via its 302 redirects into jsDelivr) but works on a cold
+	 * cache. Self-hosting is the only full fix and is a separate decision.
 	 *
 	 * @var string
 	 */
-	const DEFAULT_ROOT_PATH = 'https://cdn.jsdelivr.net/gh/spbgovbr-vlibras/vlibras-portal@v7.5.0/app';
+	const DEFAULT_ROOT_PATH = 'https://vlibras.gov.br/app';
 
 	/**
 	 * Enqueue scripts and inject footer markup if the widget is enabled.
