@@ -65,6 +65,14 @@ This plugin bundles the following third-party libraries:
 
 == Changelog ==
 
+= 1.1.0 =
+* Fix: VLibras widget failed to load — its assets were requested from an invalid "[object Object]" path. The widget now initializes through the v7.5.0 positional API.
+* Fix: asset cache-busters were hardcoded to version 1.0.0; they now follow the plugin version, so updates are never masked by stale caches.
+* Fix: the Sienna accessibility menu now opens above the widget buttons instead of underneath them.
+* Fix: removed stylesheet overrides that fought Sienna's own button positioning.
+* Change: the settings page is now labeled "Bauhaus Accessibility" under Settings.
+* Note: the VLibras player is hosted by the government service (vlibras.gov.br). Intermittent availability of that service affects the widget independently of this plugin.
+
 = 1.0.0 =
 * Initial release.
 * VLibras widget with enable/disable toggle.
