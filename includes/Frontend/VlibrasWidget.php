@@ -52,7 +52,7 @@ class VlibrasWidget {
 			'vlibras-plugin',
 			self::WIDGET_SCRIPT_URL,
 			array(),
-			'1.0.0',
+			\Bauhaus_Accessibility\Core\Plugin::version(),
 			true
 		);
 

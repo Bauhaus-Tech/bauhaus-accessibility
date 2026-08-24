@@ -19,11 +19,22 @@ namespace Bauhaus_Accessibility\Core;
 class Plugin {
 
 	/**
-	 * Plugin version.
+	 * Plugin version, read from the main file's header.
 	 *
-	 * @var string
+	 * The header is the single authoritative source: asset cache-busters and
+	 * any other runtime use derive from it, so a release bumps the header (and
+	 * readme.txt Stable tag) and nothing else.
+	 *
+	 * @return string
 	 */
-	const VERSION = '1.0.0';
+	public static function version(): string {
+		$header = get_file_data(
+			dirname( __DIR__, 2 ) . '/bauhaus-accessibility.php',
+			array( 'Version' => 'Version' )
+		);
+
+		return $header['Version'];
+	}
 
 	/**
 	 * Option name used to store plugin settings.

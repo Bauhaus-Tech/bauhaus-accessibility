@@ -28,6 +28,9 @@ class SiennaWidgetTest extends TestCase {
 		);
 
 		Functions\when( 'get_locale' )->justReturn( 'pt_BR' );
+		// The plugin version is read from the main file's header; stub it so
+		// every asset cache-buster can be asserted against one known value.
+		Functions\when( 'get_file_data' )->justReturn( array( 'Version' => '9.9.9' ) );
 		Functions\when( 'plugin_dir_url' )->justReturn( 'https://example.com/wp-content/plugins/bauhaus-accessibility/assets/js/' );
 	}
 
@@ -58,7 +61,7 @@ class SiennaWidgetTest extends TestCase {
 				'sienna-accessibility',
 				'https://example.com/wp-content/plugins/bauhaus-accessibility/assets/js/sienna-accessibility.umd.js',
 				array(),
-				'2.0.1',
+				'9.9.9',
 				true
 			)
 			->andReturnUsing(
@@ -69,6 +72,12 @@ class SiennaWidgetTest extends TestCase {
 
 		Functions\expect( 'wp_enqueue_style' )
 			->once()
+			->with(
+				'bauhaus-accessibility',
+				'https://example.com/wp-content/plugins/bauhaus-accessibility/assets/js/../css/bauhaus-accessibility.css',
+				array(),
+				'9.9.9'
+			)
 			->andReturn( true );
 
 		Functions\expect( 'wp_add_inline_script' )->once()->andReturn( true );

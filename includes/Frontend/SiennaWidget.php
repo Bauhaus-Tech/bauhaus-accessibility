@@ -47,8 +47,10 @@ class SiennaWidget {
 		$umd_url  = plugin_dir_url( $umd_file ) . basename( $umd_file );
 
 		// Load the reproducible local fork build. Its font resolver derives the
-		// sibling fonts directory from this script URL (ADR-006).
-		wp_enqueue_script( 'sienna-accessibility', $umd_url, array(), '2.0.1', true );
+		// sibling fonts directory from this script URL (ADR-006). The cache
+		// buster is the plugin version: our fork changes between releases even
+		// when upstream's version does not.
+		wp_enqueue_script( 'sienna-accessibility', $umd_url, array(), \Bauhaus_Accessibility\Core\Plugin::version(), true );
 
 		// Inject config element before the bundle loads.
 		// offset: [horizontal, vertical]. 45px vertical offset places
@@ -75,7 +77,7 @@ class SiennaWidget {
 			'bauhaus-accessibility',
 			plugin_dir_url( $umd_file ) . '../css/bauhaus-accessibility.css',
 			array(),
-			'1.0.0'
+			\Bauhaus_Accessibility\Core\Plugin::version()
 		);
 
 		// Add a body class so our CSS can target the correct side.

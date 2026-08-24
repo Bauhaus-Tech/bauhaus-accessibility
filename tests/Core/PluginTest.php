@@ -360,10 +360,13 @@ class PluginTest extends TestCase {
 
 
 	/**
-	 * The plugin version constant must be defined.
+	 * version() must be derived from the plugin header's Version field, so a
+	 * release only ever bumps one place (header + readme.txt).
 	 */
-	public function test_plugin_has_version_constant(): void {
-		$this->assertNotEmpty( Plugin::VERSION );
+	public function test_plugin_version_is_read_from_the_plugin_header(): void {
+		Functions\when( 'get_file_data' )->justReturn( array( 'Version' => '9.9.9' ) );
+
+		$this->assertSame( '9.9.9', Plugin::version() );
 	}
 
 	/**

@@ -25,6 +25,7 @@ class VlibrasWidgetTest extends TestCase {
 		);
 
 		Functions\when( 'plugin_dir_url' )->justReturn( 'https://example.com/wp-content/plugins/bauhaus-accessibility/' );
+		Functions\when( 'get_file_data' )->justReturn( array( 'Version' => '9.9.9' ) );
 	}
 
 	protected function tearDown(): void {
@@ -52,7 +53,7 @@ class VlibrasWidgetTest extends TestCase {
 				'vlibras-plugin',
 				'https://vlibras.gov.br/app/vlibras-plugin.js',
 				array(),
-				\Mockery::any(),
+				'9.9.9',
 				true
 			)
 			->andReturnUsing(
