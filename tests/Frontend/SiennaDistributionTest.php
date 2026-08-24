@@ -62,6 +62,23 @@ class SiennaDistributionTest extends TestCase {
 	}
 
 	/**
+	 * The opened Sienna menu must stack above both widget controls: the bundle
+	 * ships it with z-index 500000 while this plugin pins the Sienna button at
+	 * 2147483646 and VLibras renders its access control at 2147483639.
+	 */
+	public function test_plugin_styles_keep_the_opened_menu_above_the_widget_buttons(): void {
+		$plugin_root = dirname( __DIR__, 2 );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads a local plugin stylesheet.
+		$css = file_get_contents( $plugin_root . '/assets/css/bauhaus-accessibility.css' );
+
+		$this->assertMatchesRegularExpression(
+			'/\\.asw-container\\s+\\.asw-menu\\s*\\{[^}]*z-index:\\s*2147483647\\s*!important;/s',
+			(string) $css,
+			'The opened menu must sit above the Sienna and VLibras buttons.'
+		);
+	}
+
+	/**
 	 * Plugin styles must not override Sienna's own inline offsets: since the
 	 * VLibras fix, the bundle positions its control itself via
 	 * data-asw-position/data-asw-offset, and forcing left/right in CSS fights it.

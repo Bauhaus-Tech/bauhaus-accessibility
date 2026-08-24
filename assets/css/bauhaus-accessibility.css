@@ -28,6 +28,12 @@
 	max-height: 24px !important;
 }
 
+/* The bundle ships the opened menu with z-index 500000, below the buttons
+   this plugin pins above VLibras; keep the menu on top of both. */
+.asw-container .asw-menu {
+	z-index: 2147483647 !important;
+}
+
 /* Account for the widgets' different outer shells to align their controls.
    Sienna's own inline offsets (data-asw-position / data-asw-offset) position
    its button; only the VLibras shell is overridden here. */
