@@ -57,15 +57,18 @@ class VlibrasWidget {
 		);
 
 		// Map our left/right setting to VLibras position codes.
-		// VLibras uses: L, R, T, B, TL, TR, BL, BR.
-		$vlibras_position = 'left' === $position ? 'L' : 'R';
+		// The v7.5.0 loader compares the position strictly against 'l'
+		// (lower case); anything else renders on the right.
+		$vlibras_position = 'left' === $position ? 'l' : 'r';
 
-		// Initialize VLibras with position-aware config.
-		// Passing position ensures the panel opens in the correct direction.
+		// Initialize VLibras using its positional Widget(path, configUrl,
+		// avatar, position) API. Passing a config object instead makes the
+		// object itself become the asset path, so every widget asset is
+		// requested from "[object Object]/assets/..." and 404s.
 		wp_add_inline_script(
 			'vlibras-plugin',
 			sprintf(
-				'new window.VLibras.Widget({rootPath:"%s",position:"%s"});',
+				'window.VLibras.Widget("%s",undefined,undefined,"%s");',
 				esc_js( self::DEFAULT_ROOT_PATH ),
 				esc_js( $vlibras_position )
 			)

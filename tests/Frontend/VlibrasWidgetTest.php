@@ -99,7 +99,11 @@ class VlibrasWidgetTest extends TestCase {
 	}
 
 	/**
-	 * The init script must preserve the configured side with the gov.br rootPath.
+	 * The init script must call the v7.5.0 positional Widget(path, configUrl,
+	 * avatar, position) API. A config object passed as first argument becomes
+	 * the asset path and yields "[object Object]/assets/..." requests (404s).
+	 * The widget compares the position against lowercase 'l', so the side must
+	 * be emitted in lower case.
 	 */
 	public function test_init_script_preserves_configured_position_with_government_root_path(): void {
 		$inline_script = null;
@@ -115,7 +119,7 @@ class VlibrasWidgetTest extends TestCase {
 				\Mockery::on(
 					function ( string $script ) use ( &$inline_script ) {
 						$inline_script = $script;
-						return 'new window.VLibras.Widget({rootPath:"https://vlibras.gov.br/app",position:"L"});' === $script;
+						return 'window.VLibras.Widget("https://vlibras.gov.br/app",undefined,undefined,"l");' === $script;
 					}
 				)
 			)
@@ -148,7 +152,7 @@ class VlibrasWidgetTest extends TestCase {
 				\Mockery::on(
 					function ( string $script ) use ( &$inline_script ) {
 						$inline_script = $script;
-						return 'new window.VLibras.Widget({rootPath:"https://vlibras.gov.br/app",position:"R"});' === $script;
+						return 'window.VLibras.Widget("https://vlibras.gov.br/app",undefined,undefined,"r");' === $script;
 					}
 				)
 			)
