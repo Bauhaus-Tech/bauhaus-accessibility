@@ -56,8 +56,8 @@ class Plugin {
 	public function add_admin_menu(): void {
 		add_submenu_page(
 			'options-general.php',
-			__( 'Accessibility', 'bauhaus-accessibility' ),
-			__( 'Accessibility', 'bauhaus-accessibility' ),
+			__( 'Bauhaus Accessibility', 'bauhaus-accessibility' ),
+			__( 'Bauhaus Accessibility', 'bauhaus-accessibility' ),
 			'manage_options',
 			'bauhaus-accessibility',
 			array( $this, 'render_admin_page' )

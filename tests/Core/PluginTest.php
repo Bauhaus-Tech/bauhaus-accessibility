@@ -61,6 +61,10 @@ class PluginTest extends TestCase {
 
 		$this->assertTrue( $called, 'add_submenu_page was not called' );
 		$this->assertSame( 'options-general.php', $args[0] );
+		// The menu must read 'Bauhaus Accessibility' so it is identifiable
+		// among other plugins' settings pages.
+		$this->assertSame( 'Bauhaus Accessibility', $args[1], 'Page title' );
+		$this->assertSame( 'Bauhaus Accessibility', $args[2], 'Menu title' );
 		$this->assertSame( 'manage_options', $args[3] );
 		$this->assertSame( 'bauhaus-accessibility', $args[4] );
 	}

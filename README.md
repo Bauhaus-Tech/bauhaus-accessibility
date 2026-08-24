@@ -7,7 +7,7 @@ WordPress plugin that adds accessibility widgets to your site:
 
 ## VLibras widget
 
-When an administrator enables VLibras in Settings → Accessibility, visitors see
+When an administrator enables VLibras in Settings → Bauhaus Accessibility, visitors see
 the government VLibras interpreter button on the configured left or right side
 of each public page. Selecting it opens the Libras interpretation interface.
 
@@ -19,7 +19,7 @@ remain available.
 
 ## Sienna accessibility toolbar
 
-When an administrator enables Sienna in Settings → Accessibility, visitors see
+When an administrator enables Sienna in Settings → Bauhaus Accessibility, visitors see
 a compact toolbar button on the configured side of each public page. Its
 contrast, font-size, readable-font, and other toolbar controls run entirely
 from the plugin's packaged JavaScript and font files. Sienna does not make

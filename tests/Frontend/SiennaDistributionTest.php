@@ -62,28 +62,27 @@ class SiennaDistributionTest extends TestCase {
 	}
 
 	/**
-	 * Plugin positioning overrides Sienna's inline 10px offsets on either side.
+	 * Plugin styles must not override Sienna's own inline offsets: since the
+	 * VLibras fix, the bundle positions its control itself via
+	 * data-asw-position/data-asw-offset, and forcing left/right in CSS fights it.
 	 *
 	 * @return void
 	 */
-	public function test_plugin_styles_override_inline_sienna_offsets_to_align_with_vlibras(): void {
+	public function test_plugin_styles_do_not_override_inline_sienna_offsets(): void {
 		$plugin_root = dirname( __DIR__, 2 );
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- The test reads a local plugin stylesheet.
 		$css = file_get_contents( $plugin_root . '/assets/css/bauhaus-accessibility.css' );
 
 		$this->assertNotFalse( $css );
-		$left_position_styles  = strstr( $css, '.bauhaus-widgets-left' );
-		$right_position_styles = strstr( $css, '.bauhaus-widgets-right' );
+		$this->assertDoesNotMatchRegularExpression(
+			'/\.asw-menu-btn\s*\{[^}]*?(left|right):\s*[0-9]+px\s*!important;/s',
+			$css,
+			'The stylesheet must not force a side offset on the Sienna button.'
+		);
 
-		$this->assertNotFalse( $left_position_styles );
-		$this->assertNotFalse( $right_position_styles );
-		$this->assertMatchesRegularExpression(
-			'/\\.asw-container\\s*\\{.*?\\.asw-widget\\s*\\{.*?\\.asw-menu-btn\\s*\\{.*?left:\\s*20px\\s*!important;/s',
-			$left_position_styles
-		);
-		$this->assertMatchesRegularExpression(
-			'/\\.asw-container\\s*\\{.*?\\.asw-widget\\s*\\{.*?\\.asw-menu-btn\\s*\\{.*?right:\\s*20px\\s*!important;/s',
-			$right_position_styles
-		);
+		// The VLibras shell overrides stay: they align the two controls.
+		$this->assertStringContainsString( '.bauhaus-widgets-left', $css );
+		$this->assertStringContainsString( '.bauhaus-widgets-right', $css );
+		$this->assertStringContainsString( 'div[vw]', $css );
 	}
 }
