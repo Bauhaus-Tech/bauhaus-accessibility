@@ -18,6 +18,13 @@ on:
   release:
     types: [published]
 
+# Serialize with the readme/assets updater: both write to the same SVN
+# trunk, and a concurrent run makes the asset-update action see unrelated
+# trunk modifications and abort.
+concurrency:
+  group: wordpress-org-svn
+  cancel-in-progress: false
+
 jobs:
   # Gate: run the official Plugin Check before publishing. If it fails, the
   # deploy job below is skipped and nothing ships to WordPress.org.

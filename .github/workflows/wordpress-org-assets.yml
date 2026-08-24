@@ -13,6 +13,13 @@ on:
       - 'readme.txt'
       - '.wordpress-org/**'
 
+# Serialize with the release deploy: both write to the same SVN trunk, and
+# a concurrent run makes this action see unrelated trunk modifications and
+# abort ("Other files have been modified; changes not deployed").
+concurrency:
+  group: wordpress-org-svn
+  cancel-in-progress: false
+
 jobs:
   trunk:
     name: Push readme & assets to trunk
